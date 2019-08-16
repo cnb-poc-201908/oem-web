@@ -79,7 +79,7 @@
               <Card>
                 <div style="text-align:center">
                   <!-- <img src="../../images/logo.png" /> -->
-                  <h3>A high quality UI Toolkit based on Vue.js</h3>
+                  <h3>Is coming ......</h3>
                 </div>
               </Card>
             </Col>
