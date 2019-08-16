@@ -29,4 +29,4 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Version
-2019-0816-1533
+2019-0816-1539
