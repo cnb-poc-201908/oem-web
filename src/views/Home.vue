@@ -76,10 +76,80 @@
               </Card>
             </Col>
             <Col span="8">
-              <Card>
+              <Card :padding="0">
                 <div style="text-align:center">
-                  <!-- <img src="../../images/logo.png" /> -->
-                  <h3>Is coming ......</h3>
+                  <Tabs value="name1">
+                    <TabPane label="经销商" name="name1">
+                      <div class="tagName">
+                        <div class="param">参数</div>
+                        <div>
+                          <img style="margin-right: 10px;" src="../assets/16.svg" />
+                          <img src="../assets/12.svg" />
+                        </div>
+                      </div>
+                      <div style="margin: 11px 16px 40px 16px;">
+                        <Select v-model="model1" height="40px" placement="bottom">
+                          <Option
+                            v-for="item in cityList"
+                            :value="item.value"
+                            :key="item.value"
+                          >{{ item.label }}</Option>
+                        </Select>
+                      </div>
+                      <div style="margin:0 16px 20px">
+                        <Card width="270px" height="60px" style="background: #3D3D3D;">
+                          <div class="tagList">
+                            <Input
+                              v-model="value"
+                              placeholder="Enter something..."
+                              style="width: 65px"
+                            />
+                            <Input
+                              v-model="value"
+                              placeholder="Enter something..."
+                              style="width: 50px"
+                            />
+                          </div>
+                        </Card>
+                      </div>
+                      <div style="margin:0 16px 20px">
+                        <Card width="270px" height="60px" style="background: #3D3D3D;">
+                          <div class="tagList">
+                            <Input
+                              v-model="value"
+                              placeholder="Enter something..."
+                              style="width: 65px"
+                            />
+                            <Input
+                              v-model="value"
+                              placeholder="Enter something..."
+                              style="width: 50px"
+                            />
+                          </div>
+                        </Card>
+                      </div>
+                      <div style="margin:0 16px 20px">
+                        <Card width="270px" height="60px" style="background: #3D3D3D;">
+                          <div class="tagList">
+                            <Input
+                              v-model="value"
+                              placeholder="Enter something..."
+                              style="width: 65px"
+                            />
+                            <Input
+                              v-model="value"
+                              placeholder="Enter something..."
+                              style="width: 50px"
+                            />
+                          </div>
+                        </Card>
+                      </div>
+                      <div>
+                        <button class="againMapping" width="100%">重新匹配</button>
+                      </div>
+                    </TabPane>
+                    <TabPane label="厂商" name="name2">标签二的内容</TabPane>
+                  </Tabs>
                 </div>
               </Card>
             </Col>
@@ -96,7 +166,7 @@
               </Col>
             </Row>
           </Card>
-          <div style="margin: 6px 0;">
+          <div style="margin: 6px 0 0;">
             <Card :padding="0">
               <div class="dealer">
                 <span>经销商名称</span>
@@ -147,8 +217,36 @@ export default {
   },
   data() {
     return {
+      model1: "",
+      value: "",
+      cityList: [
+        {
+          value: "New York",
+          label: "New York"
+        },
+        {
+          value: "London",
+          label: "London"
+        },
+        {
+          value: "Sydney",
+          label: "Sydney"
+        },
+        {
+          value: "Ottawa",
+          label: "Ottawa"
+        },
+        {
+          value: "Paris",
+          label: "Paris"
+        },
+        {
+          value: "Canberra",
+          label: "Canberra"
+        }
+      ],
+      single: false,
       options: {
-        single: false,
         title: {
           show: true,
           text: "100" + "%",
@@ -286,6 +384,7 @@ export default {
 <style lang="scss" scoped>
 .home {
   background-color: #171717;
+  height: calc(100% - 60px);
   .content {
     padding: 30px;
     .top-content {
@@ -315,6 +414,16 @@ export default {
     }
     .ivu-cell {
       border-bottom: 1px solid #3d3d3d;
+      font-family: PingFangSC-Medium;
+      font-size: 12px;
+      color: #ffffff;
+      letter-spacing: 0.14px;
+    }
+    .ivu-cell:hover {
+      background-image: linear-gradient(270deg, #282828 0%, #0062ff 98%);
+    }
+    .ivu-cell-footer {
+      color: #ffffff !important;
     }
     .dealer {
       display: flex;
@@ -415,9 +524,39 @@ export default {
       background-color: #3d3d3d !important;
     }
   }
-  // .ivu-checkbox-inner {
-  //   background-color: #3d3d3d !important;
-  //   border-radius: 2px;
-  // }
+  .ivu-checkbox-inner {
+    background-color: #3d3d3d !important;
+    border-radius: 2px;
+  }
+  .tagName {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 16px;
+    .param {
+      font-family: PingFangSC-Regular;
+      font-size: 14px;
+      color: #8c8c8c;
+      letter-spacing: 0.16px;
+    }
+  }
+  .tagList {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .againMapping {
+    width: 100%;
+    height: 60px;
+    background: #3d3d3d;
+    border: none;
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: #ffffff;
+    letter-spacing: 0.18px;
+  }
+  .ivu-tabs-nav .ivu-tabs-tab-active {
+    color: #fff !important;
+  }
 }
 </style>

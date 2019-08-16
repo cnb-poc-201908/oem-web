@@ -27,7 +27,7 @@
 .header {
   height: 60px;
   background-color: #171717;
-  // position: fixed;
+  position: fixed;
   top: 0;
   width: 100%;
   z-index: 100;
