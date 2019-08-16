@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <img class="logo" src="../assets/bmw_logo.png">
+    <img class="title" src="../assets/BMW Sales.svg">
   </div>
 </template>
 
@@ -25,11 +25,21 @@
 
 <style lang="scss" scoped>
 .header {
-  height: 70px;
+  height: 60px;
+  background-color: #171717;
+  // position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #282828;
 
-  .logo {
-    width: 60px;
-    height: 60px;
+  .title {
+    width: 110px;
+    height: 30px;
+    margin-left: 30px;
   }
 }
 </style>
