@@ -2,15 +2,65 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
 body {
   background-color: #f4f7fb;
 }
+
 svg {
   width: 1rem;
   height: 1rem;
   vertical-align: middle;
+}
+
+.ivu-tabs-nav .ivu-tabs-tab-active {
+  color: #ffffff !important;
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  color: #FFFFFF;
+  letter-spacing: 0.18px;
+}
+
+.ivu-tabs-nav .ivu-tabs-tab:hover {
+  color: #ffffff !important;
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  color: #FFFFFF;
+  letter-spacing: 0.18px;
+}
+
+.ivu-tabs-ink-bar {
+  background-color: #20D5D2 !important;
+}
+
+.ivu-select-selection {
+  background-color: #282828 !important;
+  border: 1px solid #979797 !important;
+}
+
+.ivu-select-single .ivu-select-selection {
+  height: 40px !important;
+}
+
+.ivu-input {
+  background-color: #3D3D3D !important;
+}
+
+.ivu-select-single .ivu-select-selection .ivu-select-placeholder {
+  height: 40px !important;
+  line-height: 40px !important;
+}
+
+.ivu-select-dropdown {
+  background-color: #282828 !important;
+}
+
+.ivu-checkbox-checked .ivu-checkbox-inner {
+  background: #3D3D3D !important;
+  border-radius: 2px !important;
+  border-color: #3D3D3D !important;
 }

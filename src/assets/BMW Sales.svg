@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="111px" height="17px" viewBox="0 0 111 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53 (72520) - https://sketchapp.com -->
+    <title>BMW Sales</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="HelveticaNeue-Bold, Helvetica Neue" font-size="21" font-weight="bold" letter-spacing="0.239999995">
+        <g id="智能匹配" transform="translate(-31.000000, -21.000000)" fill="#FFFFFF">
+            <text id="BMW-Sales">
+                <tspan x="30" y="37">BMW</tspan>
+                <tspan x="84.375" y="37" font-family="HelveticaNeue-Medium, Helvetica Neue" font-weight="400"> </tspan>
+                <tspan x="90.453" y="37" font-family="HelveticaNeue, Helvetica Neue" font-weight="normal">Sales</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
