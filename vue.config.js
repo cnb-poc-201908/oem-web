@@ -1,5 +1,5 @@
 module.exports {
 
-    publicPath: 'oem'
+    publicPath: '/oem'
 
 }
