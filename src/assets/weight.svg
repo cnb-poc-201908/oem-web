@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53 (72520) - https://sketchapp.com -->
+    <title>分组</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="6 0.75 4.2941625 4.206375 0.48 4.760625 3.24 7.45125 2.5883625 11.25 6 9.456375 9.4116375 11.25 8.76 7.45125 11.52 4.7608125 7.7058375 4.206375"></polygon>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="智能匹配" transform="translate(-760.000000, -522.000000)">
+            <g id="分组" transform="translate(760.000000, 522.000000)">
+                <circle id="椭圆形" fill="#20D5D2" cx="10" cy="10" r="10"></circle>
+                <g id="icon/toggle/star-filled/16" transform="translate(4.000000, 4.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="icon-color" fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -6,60 +6,69 @@
         <Col span="18">
           <div height="100%">
             <Row style="margin-bottom: 20px;">
+              <!-- 数量展示board -->
               <Col span="24">
                 <div class="board">
                   <Card :padding="0">
                     <Row>
                       <Col class="material" span="6">
                         <Row class="cardShow">
-                          <Col span="24">
-                            <div class="title1">物料</div>
-                          </Col>
-                          <Col span="24">
-                            <div class="count">
-                              {{material}}
-                              <span class="unit">台</span>
-                            </div>
-                          </Col>
+                          <div @click="potentialMapping('all')">
+                            <Col span="24">
+                              <div class="title1">物料</div>
+                            </Col>
+                            <Col span="24">
+                              <div class="count">
+                                {{material}}
+                                <span class="unit">台</span>
+                              </div>
+                            </Col>
+                          </div>
                         </Row>
                       </Col>
                       <Col span="6">
                         <Row class="cardShow">
-                          <Col span="24">
-                            <div class="title">完全匹配</div>
-                          </Col>
-                          <Col span="24">
-                            <div class="count">
-                              {{completeMapping}}
-                              <span class="unit">台</span>
-                            </div>
-                          </Col>
+                          <div @click="potentialMapping('complete')">
+                            <Col span="24">
+                              <div class="title">完全匹配</div>
+                            </Col>
+                            <Col span="24">
+                              <div class="count">
+                                {{completeMapping}}
+                                <span class="unit">台</span>
+                              </div>
+                            </Col>
+                          </div>
                         </Row>
                       </Col>
                       <Col span="6">
                         <Row class="cardShow">
-                          <Col span="24">
-                            <div class="title">最优匹配</div>
-                          </Col>
-                          <Col span="24">
-                            <div class="count">
-                              {{optimalMapping}}
-                              <span class="unit">台</span>
-                            </div>
-                          </Col>
+                          <div @click="potentialMapping('optimal')">
+                            <Col span="24">
+                              <div class="title">最优匹配</div>
+                            </Col>
+                            <Col span="24">
+                              <div class="count">
+                                {{optimalMapping}}
+                                <span class="unit">台</span>
+                              </div>
+                            </Col>
+                          </div>
                         </Row>
                       </Col>
                       <Col span="6">
                         <Row class="cardShow">
-                          <Col span="24">
-                            <div class="title">推荐匹配</div>
-                          </Col>
-                          <Col span="24">
-                            <div class="count">
-                              {{recommendMapping}}
-                              <span class="unit">台</span>
-                            </div>
-                          </Col>
+                          <div @click="potentialMapping('recommend')">
+                            <Col span="24">
+                              <div class="title">推荐匹配</div>
+                            </Col>
+                            <Col span="24">
+                              <div class="count">
+                                {{recommendMapping}}
+                                <span class="unit">台</span>
+                              </div>
+                            </Col>
+                          </div>
                         </Row>
                       </Col>
                     </Row>
@@ -68,6 +77,7 @@
               </Col>
             </Row>
             <Row :gutter="16" class="chartHight">
+              <!-- echart -->
               <Col span="16">
                 <Card>
                   <div>
@@ -76,12 +86,84 @@
                   </div>
                 </Card>
               </Col>
+              <!-- 厂商，经销商 -->
               <Col span="8">
                 <Card :padding="0">
                   <div style="text-align:center">
                     <Tabs value="name1">
                       <TabPane label="经销商" name="name1">
                         <div class="tagName">
+                          <div class="param">参数</div>
+                          <div class="dealerIcon">
+                            <img style="margin-right: 10px;" src="../assets/16.svg" />
+                            <img src="../assets/12.svg" />
+                          </div>
+                        </div>
+                        <div style="margin: 11px 16px 40px 16px;">
+                          <Select v-model="model1" height="40px" placement="bottom" @on-change="chooseItem">
+                            <Option
+                              v-for="item in dealerList"
+                              :value="item.value"
+                              :key="item.value"
+                              
+                            >{{ item.label }}</Option>
+                          </Select>
+                        </div>
+                        <div class="weight_item">
+                          <img class="weight_icon" src="../assets/weight.svg" />
+                          <Card width="270px" height="60px" style="background: #3D3D3D;">
+                            <div class="tagList">
+                              <Input
+                                v-model="value"
+                                placeholder="Enter something..."
+                                style="width: 65px"
+                              />
+                              <Input
+                                v-model="value"
+                                placeholder="Enter something..."
+                                style="width: 50px"
+                              />
+                            </div>
+                          </Card>
+                        </div>
+                        <div class="weight_item">
+                          <Card width="270px" height="60px" style="background: #3D3D3D;">
+                            <div class="tagList">
+                              <Input
+                                v-model="value"
+                                placeholder="Enter something..."
+                                style="width: 65px"
+                              />
+                              <Input
+                                v-model="value"
+                                placeholder="Enter something..."
+                                style="width: 50px"
+                              />
+                            </div>
+                          </Card>
+                        </div>
+                        <div class="weight_item">
+                          <Card width="270px" height="60px" style="background: #3D3D3D;">
+                            <div class="tagList">
+                              <Input
+                                v-model="value"
+                                placeholder="Enter something..."
+                                style="width: 65px"
+                              />
+                              <Input
+                                v-model="value"
+                                placeholder="Enter something..."
+                                style="width: 50px"
+                              />
+                            </div>
+                          </Card>
+                        </div>
+                        <div>
+                          <button class="againMapping" width="100%">重新匹配</button>
+                        </div>
+                      </TabPane>
+                      <TabPane label="厂商" name="name2">
+                        <!-- <div class="tagName">
                           <div class="param">参数</div>
                           <div>
                             <img style="margin-right: 10px;" src="../assets/16.svg" />
@@ -91,7 +173,7 @@
                         <div style="margin: 11px 16px 40px 16px;">
                           <Select v-model="model1" height="40px" placement="bottom">
                             <Option
-                              v-for="item in cityList"
+                              v-for="item in dealerList"
                               :value="item.value"
                               :key="item.value"
                             >{{ item.label }}</Option>
@@ -147,9 +229,8 @@
                         </div>
                         <div>
                           <button class="againMapping" width="100%">重新匹配</button>
-                        </div>
+                        </div>-->
                       </TabPane>
-                      <TabPane label="厂商" name="name2">标签二的内容</TabPane>
                     </Tabs>
                   </div>
                 </Card>
@@ -157,6 +238,7 @@
             </Row>
           </div>
         </Col>
+        <!-- 匹配不准确 -->
         <Col span="6">
           <Card>
             <Row class="cardShow">
@@ -166,6 +248,9 @@
               <Col span="24">
                 <div class="top-content">TOP 10</div>
               </Col>
+              <Col span="24">
+                <Slider v-model="value2" range></Slider>
+              </Col>
             </Row>
           </Card>
           <div style="margin: 6px 0 0;">
@@ -174,18 +259,68 @@
                 <span>经销商名称</span>
                 <span>比率</span>
               </div>
-              <CellGroup>
-                <Cell title="1. 经销商602" extra="10%" />
-                <Cell title="1. 经销商602" extra="10%" />
-                <Cell title="1. 经销商602" extra="10%" />
-                <Cell title="1. 经销商602" extra="10%" />
-                <Cell title="1. 经销商602" extra="10%" />
-                <Cell title="1. 经销商602" extra="10%" />
-                <Cell title="1. 经销商602" extra="10%" />
-                <Cell title="1. 经销商602" extra="10%" />
-                <Cell title="1. 经销商602" extra="10%" />
-                <Cell title="1. 经销商602" extra="10%" />
-              </CellGroup>
+              <ul>
+                <li class="top_li" @click="openModel">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+              </ul>
             </Card>
           </div>
           <Card :padding="0">
@@ -203,56 +338,99 @@
         </Col>
       </Row>
     </div>
+    <Modal v-model="dealerModal" title="经销商名称" :footer-hide="true" width="560px">
+      <Table :columns="columns1" :data="data1"></Table>
+      <div style="margin-top:40px;">
+        <button class="correct">矫正模型</button>
+      </div>
+    </Modal>
   </div>
 </template>
 
 <script>
-import HelloWorld from "@/components/HelloWorld.vue";
 import api from "@/http";
 import Header from "@/components/header.vue";
 
 export default {
   name: "home",
   components: {
-    HelloWorld,
     Header
   },
   data() {
     return {
+      value2: [20, 50],
+      // 经销商弹框
+      dealerModal: false,
+      columns1: [
+        {
+          title: "Name",
+          key: "name"
+        },
+        {
+          title: "Age",
+          key: "age"
+        },
+        {
+          title: "Address",
+          key: "address"
+        }
+      ],
+      data1: [
+        {
+          name: "John Brown",
+          age: 18,
+          address: "New York No. 1 Lake Park",
+          date: "2016-10-03"
+        },
+        {
+          name: "Jim Green",
+          age: 24,
+          address: "London No. 1 Lake Park",
+          date: "2016-10-01"
+        },
+        {
+          name: "Joe Black",
+          age: 30,
+          address: "Sydney No. 1 Lake Park",
+          date: "2016-10-02"
+        },
+        {
+          name: "Jon Snow",
+          age: 26,
+          address: "Ottawa No. 2 Lake Park",
+          date: "2016-10-04"
+        }
+      ],
       model1: "",
       value: "",
-      cityList: [
-        {
-          value: "New York",
-          label: "New York"
-        },
-        {
-          value: "London",
-          label: "London"
-        },
-        {
-          value: "Sydney",
-          label: "Sydney"
-        },
-        {
-          value: "Ottawa",
-          label: "Ottawa"
-        },
-        {
-          value: "Paris",
-          label: "Paris"
-        },
-        {
-          value: "Canberra",
-          label: "Canberra"
-        }
+      dealerList: [
+        { value: "D0001", label: "D09L 武汉江宝南湖" },
+        { value: "D0002", label: "D17U 西安中宝" },
+        { value: "D0003", label: "D18G 安阳安德宝" },
+        { value: "D0004", label: "D26D 德州申宝" },
+        { value: "D0005", label: "D29N 沈阳宝晋" },
+        { value: "D0006", label: "D40H 朝阳 汇华宝" },
+        { value: "D0007", label: "D43D 福清德宝" },
+        { value: "D0008", label: "D44 济南大友宝" },
+        { value: "D0009", label: "D45H 昆明宝瀚" },
+        { value: "D0010", label: "D46F 岳阳美宝行" },
+        { value: "D0011", label: "D46M 浏阳美宝行" },
+        { value: "D0012", label: "D47C 眉山长宝" },
+        { value: "D0013", label: "D61B 滨州宝通" },
+        { value: "D0014", label: "D65A 北京卡森" },
+        { value: "D0015", label: "D66G 重庆新宝" },
+        { value: "D0016", label: "D66K 岳阳岳宝" },
+        { value: "D0017", label: "D82A 焦作东宝行" },
+        { value: "D0018", label: "D96A 张家港龙之宝" },
+        { value: "D0019", label: "DA7D 滁州宝晋" },
+        { value: "D0020", label: "DB4A 包头宝霆" }
       ],
       single: false,
       options: {
         title: {
           show: true,
           text: "100" + "%",
-          subtext: '最优分配',
+          subtext: "最优分配",
           textStyle: {
             color: "#ffffff",
             fontSize: 45,
@@ -381,6 +559,21 @@ export default {
     api.getData().then(res => {
       console.log(res.data);
     });
+  },
+  methods: {
+    openModel() {
+      this.dealerModal = true;
+    },
+    potentialMapping(type) {
+      this.$store.commit("setMappingType", type);
+      this.$router.push({ name: "about" });
+    },
+    chooseItem(id) {
+      console.log(id);
+      api.getData().then((res) =>{
+        console.log(res.data.data)
+      })
+    }
   }
 };
 </script>
@@ -388,15 +581,9 @@ export default {
 .home {
   background-color: #171717;
   height: 100%;
-  // height: calc(100% - 70px);
   .content {
-    // height: 100vh;
-    // padding: 90px 30px 30px;
     padding: 30px;
     height: calc(100% - 60px);
-    // .chartHight {
-    //   // height: calc(100% - 143px);
-    // }
     .top-content {
       font-family: PingFangSC-Medium;
       font-size: 36px;
@@ -416,37 +603,38 @@ export default {
       color: #bebebe;
       letter-spacing: 0.14px;
     }
-    .ivu-cell-title {
-      font-family: PingFangSC-Regular;
-      font-size: 14px;
-      color: #ffffff;
-      letter-spacing: 0.16px;
-    }
-    .ivu-cell {
-      border-bottom: 1px solid #3d3d3d;
-      font-family: PingFangSC-Medium;
-      font-size: 12px;
-      color: #ffffff;
-      letter-spacing: 0.14px;
-    }
-    .ivu-cell:hover {
-      background-image: linear-gradient(270deg, #282828 0%, #0062ff 98%);
-    }
-    .ivu-cell-footer {
-      color: #ffffff !important;
-    }
     .dealer {
       display: flex;
       justify-content: space-between;
       align-items: center;
       height: 42px;
-      padding: 7px 16px;
+      padding: 10px 50px 10px 30px;
       border-bottom: 1px solid #3d3d3d;
       background: #565656;
       font-family: PingFangSC-Medium;
       font-size: 12px;
       color: #bebebe;
       letter-spacing: 0.14px;
+    }
+    .top_li {
+      &:hover {
+        background-image: linear-gradient(270deg, #282828 0%, #0062ff 98%);
+      }
+      &:active {
+        background-image: linear-gradient(270deg, #282828 0%, #0062ff 98%);
+      }
+      .top_form {
+        border: 1px solid #3d3d3d;
+        font-family: PingFangSC-Regular;
+        font-size: 14px;
+        color: #ffffff;
+        letter-spacing: 0.16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 42px;
+        padding: 10px 50px 10px 30px;
+      }
     }
   }
   .board {
@@ -455,23 +643,27 @@ export default {
     }
     .cardShow {
       margin: 16px 20px;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.6;
+      }
     }
   }
   .title {
     font-family: PingFangSC-Regular;
-    font-size: 18px;
+    font-size: 16px;
     color: #8c8c8c;
     letter-spacing: 0.21px;
   }
   .title1 {
     font-family: PingFangSC-Regular;
-    font-size: 18px;
+    font-size: 16px;
     color: #ffffff;
     letter-spacing: 0.21px;
   }
   .count {
     font-family: PingFangSC-Regular;
-    font-size: 56px;
+    font-size: 50px;
     color: #ffffff;
     letter-spacing: 0.64px;
   }
@@ -497,7 +689,7 @@ export default {
   .echarts {
     width: 100%;
     height: 450px;
-    // height: calc(100% - 203px); 
+    // height: calc(100% - 203px);
     // margin-top: -40px;
   }
   .btn-primary {
@@ -517,7 +709,6 @@ export default {
     align-items: center;
     opacity: 0.8;
     font-family: PingFangSC-Regular;
-
     color: #f3f3f3;
     letter-spacing: 0.16px;
     line-height: 18px;
@@ -544,11 +735,24 @@ export default {
     justify-content: space-between;
     align-items: center;
     margin: 0 16px;
+    .dealerIcon {
+      cursor: pointer;
+    }
     .param {
       font-family: PingFangSC-Regular;
       font-size: 14px;
       color: #8c8c8c;
       letter-spacing: 0.16px;
+    }
+  }
+  .weight_item {
+    margin: 0 16px 20px;
+    position: relative;
+    .weight_icon {
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      z-index: 30;
     }
   }
   .tagList {
@@ -569,5 +773,15 @@ export default {
   .ivu-tabs-nav .ivu-tabs-tab-active {
     color: #fff !important;
   }
+}
+.correct {
+  width: 100%;
+  height: 60px;
+  background: #0062ff;
+  font-family: PingFangSC-Medium;
+  font-size: 16px;
+  color: #ffffff;
+  letter-spacing: 0.18px;
+  border: none;
 }
 </style>

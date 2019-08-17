@@ -64,3 +64,64 @@ svg {
   border-radius: 2px !important;
   border-color: #3D3D3D !important;
 }
+
+.ivu-modal-content {
+  background-color: #171717 !important;
+}
+
+.ivu-modal-header {
+  border-bottom: none !important;
+}
+
+.ivu-modal-header-inner {
+  font-family: PingFangSC-Regular;
+  font-size: 16px !important;
+  color: #FFFFFF !important;
+  letter-spacing: 0.18px;
+}
+
+.ivu-table th {
+  background-color: #565656 !important;
+  border-bottom: 3px solid #171717 !important;
+}
+
+.ivu-table td {
+  border-bottom: 2px solid #171717 !important;
+  background: #3D3D3D !important;
+}
+
+.ivu-table-wrapper {
+  border: 1px solid #171717 !important;
+  border-bottom: 0 !important;
+  border-right: 0 !important;
+  border-top: 0 !important;
+  border-left: 0 !important;
+}
+
+.ivu-table {
+  font-family: PingFangSC-Regular;
+  font-size: 14px !important;
+  color: #BEBEBE !important;
+  letter-spacing: 0.16px;
+}
+
+.ivu-tabs {
+  color: #fff;
+}
+
+.ivu-slider-bar {
+  background: #EE538B !important;
+}
+
+.ivu-slider-button {
+  border: 2px solid #EE538B !important;
+}
+
+.ivu-slider-button:hover {
+  border-color: #EE538B !important;
+}
+
+.ivu-select-single .ivu-select-selection .ivu-select-selected-value {
+  height: 40px !important;
+  line-height: 40px !important;
+}
