@@ -114,7 +114,7 @@ export default {
           value: 2
         }
       ];
-      options.series[0].links = data;
+      options.series[0].links = links;
       return options;
     }
   },
