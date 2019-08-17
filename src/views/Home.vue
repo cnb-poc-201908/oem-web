@@ -4,156 +4,158 @@
     <div class="content">
       <Row :gutter="16">
         <Col span="18">
-          <Row style="margin-bottom: 20px;">
-            <Col span="24">
-              <div class="board">
-                <Card :padding="0">
-                  <Row>
-                    <Col class="material" span="6">
-                      <Row class="cardShow">
-                        <Col span="24">
-                          <div class="title1">物料</div>
-                        </Col>
-                        <Col span="24">
-                          <div class="count">
-                            {{material}}
-                            <span class="unit">台</span>
-                          </div>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col span="6">
-                      <Row class="cardShow">
-                        <Col span="24">
-                          <div class="title">完全匹配</div>
-                        </Col>
-                        <Col span="24">
-                          <div class="count">
-                            {{completeMapping}}
-                            <span class="unit">台</span>
-                          </div>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col span="6">
-                      <Row class="cardShow">
-                        <Col span="24">
-                          <div class="title">最优匹配</div>
-                        </Col>
-                        <Col span="24">
-                          <div class="count">
-                            {{optimalMapping}}
-                            <span class="unit">台</span>
-                          </div>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col span="6">
-                      <Row class="cardShow">
-                        <Col span="24">
-                          <div class="title">推荐匹配</div>
-                        </Col>
-                        <Col span="24">
-                          <div class="count">
-                            {{recommendMapping}}
-                            <span class="unit">台</span>
-                          </div>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
+          <div height="100%">
+            <Row style="margin-bottom: 20px;">
+              <Col span="24">
+                <div class="board">
+                  <Card :padding="0">
+                    <Row>
+                      <Col class="material" span="6">
+                        <Row class="cardShow">
+                          <Col span="24">
+                            <div class="title1">物料</div>
+                          </Col>
+                          <Col span="24">
+                            <div class="count">
+                              {{material}}
+                              <span class="unit">台</span>
+                            </div>
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col span="6">
+                        <Row class="cardShow">
+                          <Col span="24">
+                            <div class="title">完全匹配</div>
+                          </Col>
+                          <Col span="24">
+                            <div class="count">
+                              {{completeMapping}}
+                              <span class="unit">台</span>
+                            </div>
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col span="6">
+                        <Row class="cardShow">
+                          <Col span="24">
+                            <div class="title">最优匹配</div>
+                          </Col>
+                          <Col span="24">
+                            <div class="count">
+                              {{optimalMapping}}
+                              <span class="unit">台</span>
+                            </div>
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col span="6">
+                        <Row class="cardShow">
+                          <Col span="24">
+                            <div class="title">推荐匹配</div>
+                          </Col>
+                          <Col span="24">
+                            <div class="count">
+                              {{recommendMapping}}
+                              <span class="unit">台</span>
+                            </div>
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Row>
+                  </Card>
+                </div>
+              </Col>
+            </Row>
+            <Row :gutter="16" class="chartHight">
+              <Col span="16">
+                <Card>
+                  <div>
+                    <div class="mapping">分配概览</div>
+                    <v-chart :options="options" auto-resize />
+                  </div>
                 </Card>
-              </div>
-            </Col>
-          </Row>
-          <Row :gutter="16">
-            <Col span="16">
-              <Card>
-                <div>
-                  <div class="mapping">分配概览</div>
-                  <v-chart :options="options" auto-resize />
-                </div>
-              </Card>
-            </Col>
-            <Col span="8">
-              <Card :padding="0">
-                <div style="text-align:center">
-                  <Tabs value="name1">
-                    <TabPane label="经销商" name="name1">
-                      <div class="tagName">
-                        <div class="param">参数</div>
-                        <div>
-                          <img style="margin-right: 10px;" src="../assets/16.svg" />
-                          <img src="../assets/12.svg" />
+              </Col>
+              <Col span="8">
+                <Card :padding="0">
+                  <div style="text-align:center">
+                    <Tabs value="name1">
+                      <TabPane label="经销商" name="name1">
+                        <div class="tagName">
+                          <div class="param">参数</div>
+                          <div>
+                            <img style="margin-right: 10px;" src="../assets/16.svg" />
+                            <img src="../assets/12.svg" />
+                          </div>
                         </div>
-                      </div>
-                      <div style="margin: 11px 16px 40px 16px;">
-                        <Select v-model="model1" height="40px" placement="bottom">
-                          <Option
-                            v-for="item in cityList"
-                            :value="item.value"
-                            :key="item.value"
-                          >{{ item.label }}</Option>
-                        </Select>
-                      </div>
-                      <div style="margin:0 16px 20px">
-                        <Card width="270px" height="60px" style="background: #3D3D3D;">
-                          <div class="tagList">
-                            <Input
-                              v-model="value"
-                              placeholder="Enter something..."
-                              style="width: 65px"
-                            />
-                            <Input
-                              v-model="value"
-                              placeholder="Enter something..."
-                              style="width: 50px"
-                            />
-                          </div>
-                        </Card>
-                      </div>
-                      <div style="margin:0 16px 20px">
-                        <Card width="270px" height="60px" style="background: #3D3D3D;">
-                          <div class="tagList">
-                            <Input
-                              v-model="value"
-                              placeholder="Enter something..."
-                              style="width: 65px"
-                            />
-                            <Input
-                              v-model="value"
-                              placeholder="Enter something..."
-                              style="width: 50px"
-                            />
-                          </div>
-                        </Card>
-                      </div>
-                      <div style="margin:0 16px 20px">
-                        <Card width="270px" height="60px" style="background: #3D3D3D;">
-                          <div class="tagList">
-                            <Input
-                              v-model="value"
-                              placeholder="Enter something..."
-                              style="width: 65px"
-                            />
-                            <Input
-                              v-model="value"
-                              placeholder="Enter something..."
-                              style="width: 50px"
-                            />
-                          </div>
-                        </Card>
-                      </div>
-                      <div>
-                        <button class="againMapping" width="100%">重新匹配</button>
-                      </div>
-                    </TabPane>
-                    <TabPane label="厂商" name="name2">标签二的内容</TabPane>
-                  </Tabs>
-                </div>
-              </Card>
-            </Col>
-          </Row>
+                        <div style="margin: 11px 16px 40px 16px;">
+                          <Select v-model="model1" height="40px" placement="bottom">
+                            <Option
+                              v-for="item in cityList"
+                              :value="item.value"
+                              :key="item.value"
+                            >{{ item.label }}</Option>
+                          </Select>
+                        </div>
+                        <div style="margin:0 16px 20px">
+                          <Card width="270px" height="60px" style="background: #3D3D3D;">
+                            <div class="tagList">
+                              <Input
+                                v-model="value"
+                                placeholder="Enter something..."
+                                style="width: 65px"
+                              />
+                              <Input
+                                v-model="value"
+                                placeholder="Enter something..."
+                                style="width: 50px"
+                              />
+                            </div>
+                          </Card>
+                        </div>
+                        <div style="margin:0 16px 20px">
+                          <Card width="270px" height="60px" style="background: #3D3D3D;">
+                            <div class="tagList">
+                              <Input
+                                v-model="value"
+                                placeholder="Enter something..."
+                                style="width: 65px"
+                              />
+                              <Input
+                                v-model="value"
+                                placeholder="Enter something..."
+                                style="width: 50px"
+                              />
+                            </div>
+                          </Card>
+                        </div>
+                        <div style="margin:0 16px 20px">
+                          <Card width="270px" height="60px" style="background: #3D3D3D;">
+                            <div class="tagList">
+                              <Input
+                                v-model="value"
+                                placeholder="Enter something..."
+                                style="width: 65px"
+                              />
+                              <Input
+                                v-model="value"
+                                placeholder="Enter something..."
+                                style="width: 50px"
+                              />
+                            </div>
+                          </Card>
+                        </div>
+                        <div>
+                          <button class="againMapping" width="100%">重新匹配</button>
+                        </div>
+                      </TabPane>
+                      <TabPane label="厂商" name="name2">标签二的内容</TabPane>
+                    </Tabs>
+                  </div>
+                </Card>
+              </Col>
+            </Row>
+          </div>
         </Col>
         <Col span="6">
           <Card>
@@ -250,6 +252,7 @@ export default {
         title: {
           show: true,
           text: "100" + "%",
+          subtext: '最优分配',
           textStyle: {
             color: "#ffffff",
             fontSize: 45,
@@ -384,9 +387,16 @@ export default {
 <style lang="scss" scoped>
 .home {
   background-color: #171717;
-  height: calc(100% - 60px);
+  height: 100%;
+  // height: calc(100% - 70px);
   .content {
+    // height: 100vh;
+    // padding: 90px 30px 30px;
     padding: 30px;
+    height: calc(100% - 60px);
+    // .chartHight {
+    //   // height: calc(100% - 143px);
+    // }
     .top-content {
       font-family: PingFangSC-Medium;
       font-size: 36px;
@@ -487,6 +497,7 @@ export default {
   .echarts {
     width: 100%;
     height: 450px;
+    // height: calc(100% - 203px); 
     // margin-top: -40px;
   }
   .btn-primary {

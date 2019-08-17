@@ -13,6 +13,7 @@ import "echarts/lib/chart/scatter";
 import "echarts/lib/component/tooltip";
 import "echarts/lib/component/legend";
 import "echarts/lib/component/toolbox";
+import "echarts/lib/component/title";
 import "echarts/lib/component/dataZoom";
 Vue.use(iView);
 Vue.component("v-chart", ECharts);
