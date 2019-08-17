@@ -4,7 +4,7 @@
     <div class="content">
       <div class="title">最优匹配</div>
       <Card class="sankey" :bordered="false">
-        <v-chart :options="sankeyOptions" auto-resize />
+        <v-chart :options="sankeyOptions" :autoresize="true"/>
       </Card>
     </div>
   </div>
@@ -15,14 +15,309 @@ export default {
   name: "about",
   data() {
     return {
+      color: [
+        "#78b4ff",
+        "#f66bc7",
+        "#2bcba7",
+        "#ff8896",
+        "#79c628",
+        "#6c93ee",
+        "#a9abff",
+        "#f7a23f",
+        "#27bae7",
+        "#ff6d9d",
+        "#cb79ff",
+        "#f95b5a",
+        "#ccaf27",
+        "#38b99c",
+        "#93d0ff",
+        "#bd74e0",
+        "#fd77da",
+        "#dea700"
+      ],
+      city: [
+        {
+          name: "深圳市",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "广州市",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "珠海市",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "汕头市",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "佛山市",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "深圳市2",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "广州市2",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "珠海2市",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "汕头市2",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "佛山市2",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "深圳市3",
+          plts: [
+            { name: "PM25", rate: 95 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "广州市3",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "珠海3市",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "汕头市3",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "佛山市3",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "深圳市4",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "广州市4",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "珠海市4",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "汕头市4",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "佛山市4",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "深圳市5",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 35 }
+          ]
+        },
+        {
+          name: "广州市5",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 35 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "珠海市5",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "汕头市5",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 45 },
+            { name: "O3", rate: 15 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        },
+        {
+          name: "佛山市5",
+          plts: [
+            { name: "PM25", rate: 25 },
+            { name: "PM10", rate: 15 },
+            { name: "O3", rate: 35 },
+            { name: "CO", rate: 15 },
+            { name: "NO2", rate: 15 },
+            { name: "SO2", rate: 15 }
+          ]
+        }
+      ],
       option: {
         series: [
           {
             type: "sankey",
             data: [],
             links: [],
-            // width: '100%',
-            height: "100%",
             top: "10%",
             right: "10%",
             left: "10%",
@@ -61,60 +356,36 @@ export default {
     },
     sankeyOptions() {
       let options = this.deepClone(this.option);
-      let data = [
-        {
-          name: "a"
-        },
-        {
-          name: "b"
-        },
-        {
-          name: "a1"
-        },
-        {
-          name: "a2"
-        },
-        {
-          name: "b1"
-        },
-        {
-          name: "c"
-        }
-      ];
-      options.series[0].data = data;
-      let links = [
-        {
-          source: "a",
-          target: "a1",
-          value: 5
-        },
-        {
-          source: "a",
-          target: "a2",
-          value: 3
-        },
-        {
-          source: "b",
-          target: "b1",
-          value: 8
-        },
-        {
-          source: "a",
-          target: "b1",
-          value: 3
-        },
-        {
-          source: "b1",
-          target: "a1",
-          value: 1
-        },
-        {
-          source: "b1",
-          target: "c",
-          value: 2
-        }
-      ];
-      options.series[0].links = links;
+      let data = [];
+      let links = [];
+      this.city.forEach((v, i) => {
+        links.push({
+          name: v.name,
+          itemStyle: {
+            color: "#78b4ff"
+          }
+        });
+        v.plts.forEach((val, j) => {
+          if (i === 0) {
+            links.push({
+              name: val.name,
+              itemStyle: {
+                color: this.color[j]
+              }
+            });
+          }
+          data.push({
+            target: v.name,
+            source: val.name,
+            value: val.rate,
+            lineStyle: {
+              color: this.color[j]
+            }
+          });
+        });
+      });
+      options.series[0].data = links;
+      options.series[0].links = data;
       return options;
     }
   },
@@ -155,7 +426,7 @@ export default {
       .echarts {
         width: 100%;
         // height: calc(100% - 200px);
-        // height: 60%;
+        // height: 800px;
       }
     }
   }
