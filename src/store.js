@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 const initialState = () => ({
   mappingType: '',
+  weightList: {}
 });
 
 export default new Vuex.Store({
@@ -12,6 +13,9 @@ export default new Vuex.Store({
   mutations: {
     setMappingType(state, value) {
       state.mappingType = value;
+    },
+    setWeightList(state, value) {
+      state.weightList = value;
     }
   },
   actions: {

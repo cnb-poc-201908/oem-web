@@ -1,11 +1,14 @@
 import axios from 'axios'
 
 export default {
-  DATA_URL: "https://randomuser.me/api/",
+  DATA_URL: "http://bmwpoc.cdkapps.cn:30090",
   getData() {
     return axios.get(`${this.DATA_URL}/?results=50`);
   },
   getDetail(id) {
     return axios.get(`${this.DATA_URL}`);
+  },
+  getModels(dealerId) {
+    return axios.get(`${this.DATA_URL}/model/models/${dealerId}`);
   }
 }

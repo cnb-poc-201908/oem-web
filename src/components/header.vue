@@ -15,9 +15,9 @@
     },
     created() {
       console.log(this.$moment().format('YYYY-MM-DD'));
-      api.getData().then(res => {
-        console.log(res.data);
-      })
+      // api.getData().then(res => {
+      //   console.log(res.data);
+      // })
     },
   }
 

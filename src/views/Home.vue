@@ -95,28 +95,36 @@
                         <div class="tagName">
                           <div class="param">参数</div>
                           <div class="dealerIcon">
-                            <img style="margin-right: 10px;" src="../assets/16.svg" />
+                            <img
+                              style="margin-right: 10px;"
+                              src="../assets/16.svg"
+                              @click="edit=true"
+                            />
                             <img src="../assets/12.svg" />
                           </div>
                         </div>
                         <div style="margin: 11px 16px 40px 16px;">
-                          <Select v-model="model1" height="40px" placement="bottom" @on-change="chooseItem">
+                          <Select
+                            v-model="model1"
+                            height="40px"
+                            placement="bottom"
+                            @on-change="chooseItem"
+                          >
                             <Option
                               v-for="item in dealerList"
                               :value="item.value"
                               :key="item.value"
-                              
                             >{{ item.label }}</Option>
                           </Select>
                         </div>
-                        <div class="weight_item">
+                        <div class="weight_item" v-for="(val, key, i) in weightList" :key="i">
                           <img class="weight_icon" src="../assets/weight.svg" />
                           <Card width="270px" height="60px" style="background: #3D3D3D;">
-                            <div class="tagList">
+                            <div v-if="edit" class="tagList">
                               <Input
                                 v-model="value"
                                 placeholder="Enter something..."
-                                style="width: 65px"
+                                style="width: 85px"
                               />
                               <Input
                                 v-model="value"
@@ -124,112 +132,19 @@
                                 style="width: 50px"
                               />
                             </div>
-                          </Card>
-                        </div>
-                        <div class="weight_item">
-                          <Card width="270px" height="60px" style="background: #3D3D3D;">
-                            <div class="tagList">
-                              <Input
-                                v-model="value"
-                                placeholder="Enter something..."
-                                style="width: 65px"
-                              />
-                              <Input
-                                v-model="value"
-                                placeholder="Enter something..."
-                                style="width: 50px"
-                              />
-                            </div>
-                          </Card>
-                        </div>
-                        <div class="weight_item">
-                          <Card width="270px" height="60px" style="background: #3D3D3D;">
-                            <div class="tagList">
-                              <Input
-                                v-model="value"
-                                placeholder="Enter something..."
-                                style="width: 65px"
-                              />
-                              <Input
-                                v-model="value"
-                                placeholder="Enter something..."
-                                style="width: 50px"
-                              />
+                            <div v-if="!edit" class="tagList">
+                              <span class="weightName">{{key}}</span>
+                              <span class="weightValue">{{val}}</span>
                             </div>
                           </Card>
                         </div>
                         <div>
-                          <button class="againMapping" width="100%">重新匹配</button>
+                          <button v-if="edit" class="againMapping" width="100%">更新</button>
+                          <button v-if="!edit" class="againMapping" width="100%">重新匹配</button>
                         </div>
                       </TabPane>
                       <TabPane label="厂商" name="name2">
-                        <!-- <div class="tagName">
-                          <div class="param">参数</div>
-                          <div>
-                            <img style="margin-right: 10px;" src="../assets/16.svg" />
-                            <img src="../assets/12.svg" />
-                          </div>
-                        </div>
-                        <div style="margin: 11px 16px 40px 16px;">
-                          <Select v-model="model1" height="40px" placement="bottom">
-                            <Option
-                              v-for="item in dealerList"
-                              :value="item.value"
-                              :key="item.value"
-                            >{{ item.label }}</Option>
-                          </Select>
-                        </div>
-                        <div style="margin:0 16px 20px">
-                          <Card width="270px" height="60px" style="background: #3D3D3D;">
-                            <div class="tagList">
-                              <Input
-                                v-model="value"
-                                placeholder="Enter something..."
-                                style="width: 65px"
-                              />
-                              <Input
-                                v-model="value"
-                                placeholder="Enter something..."
-                                style="width: 50px"
-                              />
-                            </div>
-                          </Card>
-                        </div>
-                        <div style="margin:0 16px 20px">
-                          <Card width="270px" height="60px" style="background: #3D3D3D;">
-                            <div class="tagList">
-                              <Input
-                                v-model="value"
-                                placeholder="Enter something..."
-                                style="width: 65px"
-                              />
-                              <Input
-                                v-model="value"
-                                placeholder="Enter something..."
-                                style="width: 50px"
-                              />
-                            </div>
-                          </Card>
-                        </div>
-                        <div style="margin:0 16px 20px">
-                          <Card width="270px" height="60px" style="background: #3D3D3D;">
-                            <div class="tagList">
-                              <Input
-                                v-model="value"
-                                placeholder="Enter something..."
-                                style="width: 65px"
-                              />
-                              <Input
-                                v-model="value"
-                                placeholder="Enter something..."
-                                style="width: 50px"
-                              />
-                            </div>
-                          </Card>
-                        </div>
-                        <div>
-                          <button class="againMapping" width="100%">重新匹配</button>
-                        </div>-->
+                        <div>Is coming......</div>
                       </TabPane>
                     </Tabs>
                   </div>
@@ -358,6 +273,7 @@ export default {
   },
   data() {
     return {
+      edit: false,
       value2: [20, 50],
       // 经销商弹框
       dealerModal: false,
@@ -547,7 +463,6 @@ export default {
           }
         ]
       },
-
       material: 4000,
       completeMapping: 3000,
       optimalMapping: 800,
@@ -556,9 +471,11 @@ export default {
   },
   created() {
     console.log(this.$moment().format("YYYY-MM-DD"));
-    api.getData().then(res => {
-      console.log(res.data);
-    });
+  },
+  computed: {
+    weightList() {
+      return this.$store.state.weightList;
+    }
   },
   methods: {
     openModel() {
@@ -568,12 +485,12 @@ export default {
       this.$store.commit("setMappingType", type);
       this.$router.push({ name: "about" });
     },
-    chooseItem(id) {
-      console.log(id);
-      api.getData().then((res) =>{
-        console.log(res.data.data)
-      })
-    }
+    chooseItem(dealerId) {
+      api.getModels(dealerId).then(res => {
+        console.log(res.data.data);
+        this.$store.commit("setWeightList", res.data.data);
+      });
+    },
   }
 };
 </script>
@@ -759,11 +676,23 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .weightName {
+      font-size: 16px;
+      color: #ffffff;
+      letter-spacing: 0.18px;
+      line-height: 32px;
+    }
+    .weightValue {
+      font-size: 16px;
+      color: #009c98;
+      letter-spacing: 0.18px;
+      line-height: 32px;
+    }
   }
   .againMapping {
     width: 100%;
     height: 60px;
-    background: #3d3d3d;
+    background: #0062FF;
     border: none;
     font-family: PingFangSC-Medium;
     font-size: 16px;
