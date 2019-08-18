@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 const initialState = () => ({
   mappingType: '',
-  weightList: {}
+  weightList: {},
+  dealerId: ''
 });
 
 export default new Vuex.Store({
@@ -16,6 +17,9 @@ export default new Vuex.Store({
     },
     setWeightList(state, value) {
       state.weightList = value;
+    },
+    setDealerId(state, value) {
+      state.dealerId = value;
     }
   },
   actions: {

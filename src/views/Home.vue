@@ -98,14 +98,14 @@
                             <img
                               style="margin-right: 10px;"
                               src="../assets/16.svg"
-                              @click="edit=true"
+                              @click="editParam"
                             />
-                            <img src="../assets/12.svg" />
+                            <img src="../assets/12.svg" @click="increaseDom" />
                           </div>
                         </div>
                         <div style="margin: 11px 16px 40px 16px;">
                           <Select
-                            v-model="model1"
+                            v-model="dealerId"
                             height="40px"
                             placement="bottom"
                             @on-change="chooseItem"
@@ -117,34 +117,103 @@
                             >{{ item.label }}</Option>
                           </Select>
                         </div>
+                        <div class="weight_item tagList list_title">
+                          <span style="width:80px">属性</span>
+                          <span>权重</span>
+                          <span>权值</span>
+                        </div>
                         <div class="weight_item" v-for="(val, key, i) in weightList" :key="i">
-                          <img class="weight_icon" src="../assets/weight.svg" />
+                          <img
+                            v-if="val.weight >= 8 && val.weight <= 10"
+                            class="weight_icon"
+                            src="../assets/weight.svg"
+                          />
                           <Card width="270px" height="60px" style="background: #3D3D3D;">
                             <div v-if="edit" class="tagList">
+                              <span class="weightName" style="width: 100px">{{key}}</span>
+                              <i-input v-model="val.weight" style="width: 50px"></i-input>
+                              <i-input v-model="val.value" style="width: 50px"></i-input>
+                            </div>
+                            <div v-if="!edit" class="tagList">
+                              <span class="weightName" style="width: 100px">{{key}}</span>
+                              <span class="weightName" style="width: 50px">{{val.weight}}</span>
+                              <span class="weightValue" style="width: 50px">{{val.value}}</span>
+                            </div>
+                          </Card>
+                        </div>
+                        <div class="weight_item" v-if="add">
+                          <Card width="270px" height="60px" style="background: #3D3D3D;">
+                            <div class="tagList">
+                              <i-input v-model="name" style="width: 100px"></i-input>
+                              <i-input v-model="weight" style="width: 50px"></i-input>
+                              <i-input v-model="value" style="width: 50px"></i-input>
+                            </div>
+                          </Card>
+                        </div>
+                        <div>
+                          <button v-if="edit" class="againMapping" width="100%" @click="update">更新</button>
+                          <button v-if="!edit && !add" class="againMapping" width="100%">重新匹配</button>
+                          <button v-if="add" class="againMapping" width="100%" @click="addParam">保存</button>
+                        </div>
+                      </TabPane>
+                      <TabPane label="厂商" name="name2">
+                        <div class="tagName" style="margin-bottom: 10px;">
+                          <div class="param">参数</div>
+                          <div class="dealerIcon">
+                            <img
+                              style="margin-right: 10px;"
+                              src="../assets/16.svg"
+                              @click="editParam"
+                            />
+                            <img src="../assets/12.svg" @click="increaseDom" />
+                          </div>
+                        </div>
+                        <div class="weight_item tagList list_title">
+                          <span style="width:80px">属性</span>
+                          <span>权重</span>
+                          <span>权值</span>
+                        </div>
+                        <div class="weight_item" v-for="(val, key, i) in weightList" :key="i">
+                          <img
+                            v-if="val.weight >= 8 && val.weight <= 10"
+                            class="weight_icon"
+                            src="../assets/weight.svg"
+                          />
+                          <Card width="270px" height="60px" style="background: #3D3D3D;">
+                            <div v-if="edit" class="tagList">
+                              <span class="weightName">{{key}}</span>
                               <Input
-                                v-model="value"
+                                v-model="val.weight"
                                 placeholder="Enter something..."
-                                style="width: 85px"
+                                style="width: 50px"
                               />
                               <Input
-                                v-model="value"
+                                v-model="val.value"
                                 placeholder="Enter something..."
                                 style="width: 50px"
                               />
                             </div>
                             <div v-if="!edit" class="tagList">
                               <span class="weightName">{{key}}</span>
-                              <span class="weightValue">{{val}}</span>
+                              <span class="weightName">{{val.weight}}</span>
+                              <span class="weightValue">{{val.value}}</span>
+                            </div>
+                          </Card>
+                        </div>
+                        <div class="weight_item" v-if="add">
+                          <Card width="270px" height="60px" style="background: #3D3D3D;">
+                            <div class="tagList">
+                              <Input v-model="name" style="width: 100px" />
+                              <Input v-model="weight" style="width: 50px" />
+                              <Input v-model="value" style="width: 50px" />
                             </div>
                           </Card>
                         </div>
                         <div>
-                          <button v-if="edit" class="againMapping" width="100%">更新</button>
-                          <button v-if="!edit" class="againMapping" width="100%">重新匹配</button>
+                          <button v-if="edit" class="againMapping" width="100%" @click="update">更新</button>
+                          <button v-if="!edit && !add" class="againMapping" width="100%">重新匹配</button>
+                          <button v-if="add" class="againMapping" width="100%" @click="addParam">保存</button>
                         </div>
-                      </TabPane>
-                      <TabPane label="厂商" name="name2">
-                        <div>Is coming......</div>
                       </TabPane>
                     </Tabs>
                   </div>
@@ -246,7 +315,7 @@
                 </div>
               </Col>
               <Col span="12">
-                <button class="btn-primary">确认分配</button>
+                <button class="btn-primary" @click="goToAbout">确认分配</button>
               </Col>
             </Row>
           </Card>
@@ -273,6 +342,10 @@ export default {
   },
   data() {
     return {
+      name: "",
+      weight: "",
+      value: "",
+      add: false,
       edit: false,
       value2: [20, 50],
       // 经销商弹框
@@ -317,7 +390,7 @@ export default {
           date: "2016-10-04"
         }
       ],
-      model1: "",
+      // dealerId: "",
       value: "",
       dealerList: [
         { value: "D0001", label: "D09L 武汉江宝南湖" },
@@ -470,14 +543,28 @@ export default {
     };
   },
   created() {
-    console.log(this.$moment().format("YYYY-MM-DD"));
+    // this.dealerId = this.dealerList[0].value;
+    this.$store.commit("setDealerId", this.dealerList[0].value);
+    this.chooseItem(this.dealerList[0].value);
   },
   computed: {
     weightList() {
       return this.$store.state.weightList;
+    },
+    dealerId: {
+      get() {
+        return this.$store.state.dealerId;
+      },
+      set(value) {
+        this.$store.commit("setDealerId", value);
+      }
     }
   },
   methods: {
+    goToAbout() {
+      this.$store.commit("setMappingType", 'all');
+      this.$router.push({ name: "about" });
+    },
     openModel() {
       this.dealerModal = true;
     },
@@ -486,11 +573,42 @@ export default {
       this.$router.push({ name: "about" });
     },
     chooseItem(dealerId) {
+      this.$store.commit("setDealerId", dealerId);
       api.getModels(dealerId).then(res => {
         console.log(res.data.data);
+        this.edit = false;
         this.$store.commit("setWeightList", res.data.data);
       });
     },
+    increaseDom() {
+      this.add = true;
+      this.edit = false;
+      console.log(this.add)
+    },
+    update() {
+      console.log(this.weightList);
+      api.putModels(this.dealerId, this.weightList).then(res => {
+        console.log(res.data);
+      });
+    },
+    editParam() {
+      this.edit = this.edit === true ? false : true;
+      console.log(this.edit);
+    },
+    addParam() {
+      let body = {};
+      let childbody = {
+        weight: this.weight,
+        value: this.value
+      };
+      let x = `${this.name}`;
+      let n = body[x];
+      body[x] = childbody;
+      console.log(body);
+      api.postModels(this.dealerId, body).then(res => {
+        console.log(res.data);
+      });
+    }
   }
 };
 </script>
@@ -672,6 +790,9 @@ export default {
       z-index: 30;
     }
   }
+  .list_title {
+    padding: 0 20px;
+  }
   .tagList {
     display: flex;
     justify-content: space-between;
@@ -692,7 +813,7 @@ export default {
   .againMapping {
     width: 100%;
     height: 60px;
-    background: #0062FF;
+    background: #0062ff;
     border: none;
     font-family: PingFangSC-Medium;
     font-size: 16px;

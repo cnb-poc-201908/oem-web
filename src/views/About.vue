@@ -2,7 +2,7 @@
   <div class="about">
     <Header></Header>
     <div class="content">
-      <div class="title">最优匹配</div>
+      <div class="title">{{name}}</div>
       <Card class="sankey" :bordered="false">
         <v-chart :options="sankeyOptions" :autoresize="true"/>
       </Card>
@@ -354,6 +354,20 @@ export default {
     mappingType() {
       return this.$store.state.mappingType;
     },
+    name() {
+      if (this.mappingType === 'all') {
+        return '全部物料';
+      }
+      if (this.mappingType === 'complete') {
+        return '完全匹配';
+      }
+      if (this.mappingType === 'optimal') {
+        return '最优匹配';
+      }
+      if (this.mappingType === 'recommend') {
+        return '推荐匹配';
+      } 
+    },
     sankeyOptions() {
       let options = this.deepClone(this.option);
       let data = [];
@@ -390,9 +404,9 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(() => {
-      console.log("this :", this);
-    });
+    // this.$nextTick(() => {
+    //   // console.log("this :", this);
+    // });
   },
   methods: {
     deepClone(obj) {

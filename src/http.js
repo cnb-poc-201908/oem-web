@@ -10,5 +10,12 @@ export default {
   },
   getModels(dealerId) {
     return axios.get(`${this.DATA_URL}/model/models/${dealerId}`);
+  },
+  putModels(dealerId, weightList) {
+    return axios.put(`${this.DATA_URL}/model/models/${dealerId}`, weightList);
+  },
+  postModels(dealerId, body) {
+    return axios.post(`${this.DATA_URL}/model/models/${dealerId}`, body);
   }
+
 }
