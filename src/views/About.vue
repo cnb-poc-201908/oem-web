@@ -410,6 +410,7 @@ export default {
   .content {
     padding: 20px 30px;
     width: 100%;
+    height: calc(100% - 126px);
     .title {
       font-weight: bold;
       font-size: 16px;
@@ -422,11 +423,11 @@ export default {
     }
     .sankey {
       width: 100%;
-      height: calc(100% - 90px);
+      height: 100%;
       .echarts {
         width: 100%;
         // height: calc(100% - 200px);
-        // height: 800px;
+        // height: 100%;
       }
     }
   }
