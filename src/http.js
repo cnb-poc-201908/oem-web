@@ -16,6 +16,9 @@ export default {
   },
   postModels(dealerId, body) {
     return axios.post(`${this.DATA_URL}/model/models/${dealerId}`, body);
+  },
+  getSankey(matchStatus) {
+    return axios.get(`${this.DATA_URL}/order/orders/orderflows?matchStatus=${matchStatus}`);
   }
 
 }

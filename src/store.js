@@ -6,7 +6,9 @@ Vue.use(Vuex);
 const initialState = () => ({
   mappingType: '',
   weightList: {},
-  dealerId: ''
+  dealerId: '',
+  sankeyData: [],
+  sankeyLinks: []
 });
 
 export default new Vuex.Store({
@@ -20,6 +22,12 @@ export default new Vuex.Store({
     },
     setDealerId(state, value) {
       state.dealerId = value;
+    },
+    setSankeyData(state, value) {
+      state.sankeyData = value;
+    },
+    setSankeyLinks(state, value) {
+      state.sankeyLinks = value;
     }
   },
   actions: {

@@ -318,7 +318,9 @@ export default {
             type: "sankey",
             data: [],
             links: [],
-            top: "10%",
+            // width: '100%',
+            // height: '100%',
+            top: "20px",
             right: "10%",
             left: "10%",
             bottom: "5%",
@@ -358,48 +360,28 @@ export default {
       if (this.mappingType === 'all') {
         return '全部物料';
       }
-      if (this.mappingType === 'complete') {
+      if (this.mappingType === '1') {
         return '完全匹配';
       }
-      if (this.mappingType === 'optimal') {
+      if (this.mappingType === '2') {
         return '最优匹配';
       }
-      if (this.mappingType === 'recommend') {
+      if (this.mappingType === '3') {
         return '推荐匹配';
       } 
+    },
+    sankeyData() {
+      return this.$store.state.sankeyData;
+    },
+    sankeyLinks() {
+      return this.$store.state.sankeyLinks;
     },
     sankeyOptions() {
       let options = this.deepClone(this.option);
       let data = [];
       let links = [];
-      this.city.forEach((v, i) => {
-        links.push({
-          name: v.name,
-          itemStyle: {
-            color: "#78b4ff"
-          }
-        });
-        v.plts.forEach((val, j) => {
-          if (i === 0) {
-            links.push({
-              name: val.name,
-              itemStyle: {
-                color: this.color[j]
-              }
-            });
-          }
-          data.push({
-            target: v.name,
-            source: val.name,
-            value: val.rate,
-            lineStyle: {
-              color: this.color[j]
-            }
-          });
-        });
-      });
-      options.series[0].data = links;
-      options.series[0].links = data;
+      options.series[0].data = this.sankeyData;
+      options.series[0].links = this.sankeyLinks;
       return options;
     }
   },
@@ -407,6 +389,9 @@ export default {
     // this.$nextTick(() => {
     //   // console.log("this :", this);
     // });
+  },
+  created() {
+
   },
   methods: {
     deepClone(obj) {
@@ -420,11 +405,12 @@ export default {
 <style lang="scss">
 .about {
   background-color: #171717;
-  height: 100vh;
+  height: 100%;
   .content {
-    padding: 20px 30px;
+    padding: 90px 30px 20px;
     width: 100%;
-    height: calc(100% - 126px);
+    // height: calc(100% - 126px);
+    height: 100%;
     .title {
       font-weight: bold;
       font-size: 16px;
@@ -441,7 +427,7 @@ export default {
       .echarts {
         width: 100%;
         // height: calc(100% - 200px);
-        // height: 100%;
+        height: 5000px;
       }
     }
   }

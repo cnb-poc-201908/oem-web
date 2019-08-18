@@ -2,11 +2,263 @@
   <div class="home">
     <Header></Header>
     <div class="content">
+      <div class="content_left">
+        <div class="left_top">
+          <div class="board material" @click="potentialMapping('all')">
+            <div class="board_content">
+              <div class="title sp_title">物料</div>
+              <div class="count sp_count">
+                {{material}}
+                <span class="unit">台</span>
+              </div>
+            </div>
+          </div>
+          <div class="board" @click="potentialMapping('1')">
+            <div class="board_content">
+              <div class="title">完全匹配</div>
+              <div class="count">
+                {{completeMapping}}
+                <span class="unit">台</span>
+              </div>
+            </div>
+          </div>
+          <div class="board" @click="potentialMapping('2')">
+            <div class="board_content">
+              <div class="title">最优匹配</div>
+              <div class="count">
+                {{optimalMapping}}
+                <span class="unit">台</span>
+              </div>
+            </div>
+          </div>
+          <div class="board" @click="potentialMapping('3')">
+            <div class="board_content">
+              <div class="title">推荐匹配</div>
+              <div class="count">
+                {{recommendMapping}}
+                <span class="unit">台</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="left_bottom">
+          <div class="bottom_left">
+            <div class="mapping">分配概览</div>
+            <v-chart :options="options" auto-resize />
+          </div>
+          <div class="bottom_right">
+            <Tabs value="name1">
+              <TabPane label="经销商" name="name1">
+                <div class="scroll">
+                  <div class="tagName">
+                    <div class="param">参数</div>
+                    <div class="dealerIcon">
+                      <img style="margin-right: 10px;" src="../assets/16.svg" @click="editParam" />
+                      <img src="../assets/12.svg" @click="increaseDom" />
+                    </div>
+                  </div>
+                  <div style="margin: 11px 16px 40px 16px;">
+                    <Select
+                      v-model="dealerId"
+                      height="40px"
+                      placement="bottom"
+                      @on-change="chooseItem"
+                    >
+                      <Option
+                        v-for="item in dealerList"
+                        :value="item.value"
+                        :key="item.value"
+                      >{{ item.label }}</Option>
+                    </Select>
+                  </div>
+                  <div class="weight_item tagList list_title">
+                    <span style="width:80px">属性</span>
+                    <span>权重</span>
+                    <span>权值</span>
+                  </div>
+                  <div class="weight_item" v-for="(val, key, i) in weightList" :key="i">
+                    <img
+                      v-if="val.weight >= 8 && val.weight <= 10"
+                      class="weight_icon"
+                      src="../assets/weight.svg"
+                    />
+                    <Card width="270px" height="60px" style="background: #3D3D3D;">
+                      <div v-if="edit" class="tagList">
+                        <span class="weightName" style="width: 100px">{{key}}</span>
+                        <i-input v-model="val.weight" style="width: 50px"></i-input>
+                        <i-input v-model="val.value" style="width: 50px"></i-input>
+                      </div>
+                      <div v-if="!edit" class="tagList">
+                        <span class="weightName" style="width: 100px">{{key}}</span>
+                        <span class="weightName" style="width: 50px">{{val.weight}}</span>
+                        <span class="weightValue" style="width: 50px">{{val.value}}</span>
+                      </div>
+                    </Card>
+                  </div>
+                  <div class="weight_item" v-if="add">
+                    <Card width="270px" height="60px" style="background: #3D3D3D;">
+                      <div class="tagList">
+                        <i-input v-model="name" style="width: 100px"></i-input>
+                        <i-input v-model="weight" style="width: 50px"></i-input>
+                        <i-input v-model="value" style="width: 50px"></i-input>
+                      </div>
+                    </Card>
+                  </div>
+                </div>
+                <div class="button_part">
+                  <button v-if="edit" class="againMapping" width="100%" @click="update">更新</button>
+                  <button v-if="!edit && !add" class="againMapping" width="100%">重新匹配</button>
+                  <button v-if="add" class="againMapping" width="100%" @click="addParam">保存</button>
+                </div>
+              </TabPane>
+              <TabPane label="厂商" name="name2">
+                <div class="scroll">
+                  <div class="tagName" style="margin-bottom: 10px;">
+                    <div class="param">参数</div>
+                    <div class="dealerIcon">
+                      <img style="margin-right: 10px;" src="../assets/16.svg" @click="editParam" />
+                      <img src="../assets/12.svg" @click="increaseDom" />
+                    </div>
+                  </div>
+                  <div class="weight_item tagList list_title">
+                    <span style="width:80px">属性</span>
+                    <span>权重</span>
+                    <span>权值</span>
+                  </div>
+                  <div class="weight_item" v-for="(val, key, i) in weightList" :key="i">
+                    <img
+                      v-if="val.weight >= 8 && val.weight <= 10"
+                      class="weight_icon"
+                      src="../assets/weight.svg"
+                    />
+                    <Card width="270px" height="60px" style="background: #3D3D3D;">
+                      <div v-if="edit" class="tagList">
+                        <span class="weightName" style="width: 100px">{{key}}</span>
+                        <i-input v-model="val.weight" style="width: 50px"></i-input>
+                        <i-input v-model="val.value" style="width: 50px"></i-input>
+                      </div>
+                      <div v-if="!edit" class="tagList">
+                        <span class="weightName" style="width: 100px">{{key}}</span>
+                        <span class="weightName" style="width: 50px">{{val.weight}}</span>
+                        <span class="weightValue" style="width: 50px">{{val.value}}</span>
+                      </div>
+                    </Card>
+                  </div>
+                  <div class="weight_item" v-if="add">
+                    <Card width="270px" height="60px" style="background: #3D3D3D;">
+                      <div class="tagList">
+                        <i-input v-model="name" style="width: 100px"></i-input>
+                        <i-input v-model="weight" style="width: 50px"></i-input>
+                        <i-input v-model="value" style="width: 50px"></i-input>
+                      </div>
+                    </Card>
+                  </div>
+                </div>
+                <div class="button_part">
+                  <button v-if="edit" class="againMapping" width="100%" @click="update">更新</button>
+                  <button v-if="!edit && !add" class="againMapping" width="100%">重新匹配</button>
+                  <button v-if="add" class="againMapping" width="100%" @click="addParam">保存</button>
+                </div>
+              </TabPane>
+            </Tabs>
+          </div>
+        </div>
+      </div>
+      <div class="content_right">
+        <div class="right_top">
+          <div class="title—top">匹配不准确</div>
+          <div class="top-content">TOP 10</div>
+          <Slider v-model="value2" range></Slider>
+        </div>
+        <div class="right_bottom">
+          <Card :padding="0">
+              <div class="dealer">
+                <span>经销商名称</span>
+                <span>比率</span>
+              </div>
+              <ul>
+                <li class="top_li" @click="openModel">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+                <li class="top_li">
+                  <div class="top_form">
+                    <span>1. 经销商602</span>
+                    <span>10%</span>
+                  </div>
+                </li>
+              </ul>
+            </Card>
+            <Card :padding="0">
+            <Row>
+              <Col span="12">
+                <div class="checkbox">
+                  <Checkbox v-model="single">机器学习</Checkbox>
+                </div>
+              </Col>
+              <Col span="12">
+                <button class="btn-primary" @click="goToAbout">确认分配</button>
+              </Col>
+            </Row>
+          </Card>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="content">
       <Row :gutter="16">
         <Col span="18">
           <div height="100%">
             <Row style="margin-bottom: 20px;">
-              <!-- 数量展示board -->
               <Col span="24">
                 <div class="board">
                   <Card :padding="0">
@@ -77,7 +329,6 @@
               </Col>
             </Row>
             <Row :gutter="16" class="chartHight">
-              <!-- echart -->
               <Col span="16">
                 <Card>
                   <div>
@@ -86,7 +337,6 @@
                   </div>
                 </Card>
               </Col>
-              <!-- 厂商，经销商 -->
               <Col span="8">
                 <Card :padding="0">
                   <div style="text-align:center">
@@ -222,7 +472,6 @@
             </Row>
           </div>
         </Col>
-        <!-- 匹配不准确 -->
         <Col span="6">
           <Card>
             <Row class="cardShow">
@@ -321,7 +570,7 @@
           </Card>
         </Col>
       </Row>
-    </div>
+    </div>-->
     <Modal v-model="dealerModal" title="经销商名称" :footer-hide="true" width="560px">
       <Table :columns="columns1" :data="data1"></Table>
       <div style="margin-top:40px;">
@@ -562,7 +811,7 @@ export default {
   },
   methods: {
     goToAbout() {
-      this.$store.commit("setMappingType", 'all');
+      this.$store.commit("setMappingType", "all");
       this.$router.push({ name: "about" });
     },
     openModel() {
@@ -570,6 +819,11 @@ export default {
     },
     potentialMapping(type) {
       this.$store.commit("setMappingType", type);
+      api.getSankey(type).then(res => {
+        this.$store.commit("setSankeyData", res.data.data.data);
+        this.$store.commit("setSankeyLinks", res.data.data.links);
+        console.log(res.data.data);
+      });
       this.$router.push({ name: "about" });
     },
     chooseItem(dealerId) {
@@ -583,7 +837,7 @@ export default {
     increaseDom() {
       this.add = true;
       this.edit = false;
-      console.log(this.add)
+      console.log(this.add);
     },
     update() {
       console.log(this.weightList);
@@ -615,10 +869,128 @@ export default {
 <style lang="scss" scoped>
 .home {
   background-color: #171717;
-  height: 100%;
+  height: 100vh;
   .content {
-    padding: 30px;
-    height: calc(100% - 60px);
+    padding: 90px 30px 30px;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .content_left {
+      width: 75%;
+      height: 100%;
+      margin-right: 20px;
+      .left_top {
+        width: 100%;
+        height: 27%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        .board {
+          width: 25%;
+          height: 100%;
+          background: #282828;
+          cursor: pointer;
+          &:hover {
+            opacity: 0.6;
+          }
+          .board_content {
+            width: 100%;
+            padding: 10%;
+            color: #ffffff;
+            .title {
+              color: #8c8c8c;
+              font-size: 16px;
+              letter-spacing: 0.21px;
+            }
+            .sp_title {
+              color: #ffffff;
+            }
+            .count {
+              font-size: 50px;
+              letter-spacing: 0.64px;
+              .unit {
+                font-size: 24px;
+                letter-spacing: 0.27px;
+              }
+            }
+            .sp_count {
+              font-weight: bold;
+            }
+          }
+        }
+        .material {
+          background-image: linear-gradient(-32deg, #bb8eff 0%, #0062ff 100%);
+        }
+      }
+      .left_bottom {
+        width: 100%;
+        height: 73%;
+        display: flex;
+        justify-content: space-between;
+        .bottom_left {
+          margin-right: 20px;
+          padding: 20px 40px;
+          background: #282828;
+          width: 65%;
+          height: 100%;
+          .echarts {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .bottom_right {
+          width: 35%;
+          height: 100%;
+          background: #282828;
+          // overflow: auto;
+          .button_part {
+            height: 60px;
+          }
+          .scroll {
+            height: calc(100% - 225px);
+            overflow: auto;
+          }
+          .tagName {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 16px;
+            .dealerIcon {
+              cursor: pointer;
+            }
+            .param {
+              font-size: 14px;
+              color: #8c8c8c;
+              letter-spacing: 0.16px;
+            }
+          }
+        }
+      }
+    }
+    .content_right {
+      width: 25%;
+      height: 100%;
+      .right_top {
+        background: #282828;
+        width: 100%;
+        height: 22%;
+        padding: 15px 30px;
+        margin-bottom: 6px;
+        .title—top {
+          font-size: 16px;
+          color: #8c8c8c;
+          letter-spacing: 0.18px;
+        }
+      }
+      .right_bottom {
+        width: 100%;
+        height: 78%;
+        background: #282828;
+        
+      }
+    }
+
     .top-content {
       font-family: PingFangSC-Medium;
       font-size: 36px;
@@ -721,12 +1093,12 @@ export default {
     color: #8c8c8c;
     letter-spacing: 0.18px;
   }
-  .echarts {
-    width: 100%;
-    height: 450px;
-    // height: calc(100% - 203px);
-    // margin-top: -40px;
-  }
+  // .echarts {
+  //   width: 100%;
+  //   // height: 450px;
+  //   // height: calc(100% - 203px);
+  //   // margin-top: -40px;
+  // }
   .btn-primary {
     width: 100%;
     background: #0062ff;
