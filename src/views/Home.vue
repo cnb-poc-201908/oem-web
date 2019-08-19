@@ -298,13 +298,14 @@ export default {
       options: {
         title: {
           show: true,
-          text: "100" + "%",
+          text: "",
           subtext: "推荐分配",
           textStyle: {
             color: "#ffffff",
             fontSize: 45,
             fontWeight: "normal",
-            fontFamily: "华文细黑"
+            fontFamily: "华文细黑",
+            formatter: "{d}%"
           },
           x: "center",
           y: "center"
@@ -313,12 +314,17 @@ export default {
           trigger: "item",
           formatter: "经销商: {c} ({d}%)"
         },
-        legend: {
-          orient: "horizontal",
-          bottom: "bottom",
-          left: 0,
-          data: ["推荐匹配", "最优匹配", "完全匹配"]
-        },
+        // legend: {
+        //   orient: "horizontal",
+        //   bottom: "bottom",
+        //   left: "center",
+        //   // data: ["推荐匹配", "最优匹配", "完全匹配"]
+        //   data: [
+        //     { name: "推荐匹配", icon: "cirlcle" },
+        //     { name: "最优匹配", icon: "cirlcle" },
+        //     { name: "完全匹配", icon: "cirlcle" }
+        //   ]
+        // },
         series: [
           {
             name: "面积模式",
@@ -480,6 +486,7 @@ export default {
       options.series[1].data[0].value = this.$store.state.recommendMapping;
       options.series[1].data[1].value = this.$store.state.completeMapping;
       options.series[1].data[2].value = this.$store.state.optimalMapping;
+      options.title.text = this.$store.state.recommendMapping;
       return options;
     },
     modelsOemList() {
@@ -573,6 +580,12 @@ export default {
             });
           });
           this.$store.commit("setDealerReportList", res.data.data);
+        });
+        api.getReport().then(res => {
+          this.$store.commit("setMaterial", res.data.data.summary);
+          this.$store.commit("setCompleteMapping", res.data.data.best);
+          this.$store.commit("setOptimalMapping", res.data.data.prefer);
+          this.$store.commit("setRecommendMapping", res.data.data.recommand);
         });
 
         this.spinShow = false;
