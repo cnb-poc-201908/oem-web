@@ -68,18 +68,18 @@
                       class="weight_icon"
                       src="../assets/weight.svg"
                     />
-                    <Card width="270px" height="60px" style="background: #3D3D3D;">
+                    <div class="weightClass" height="60px" style="background: #3D3D3D;">
                       <div v-if="editOemFlag" class="tagList">
                         <span class="weightName" style="width: 100px">{{key}}</span>
-                        <i-input v-model="val.weight" style="width: 50px"></i-input>
+                        <i-input v-model="val.weight" style="width: 30px"></i-input>
                         <!-- <i-input v-model="val.value" style="width: 50px"></i-input> -->
                       </div>
                       <div v-if="!editOemFlag" class="tagList">
                         <span class="weightName" style="width: 100px">{{key}}</span>
-                        <span class="weightName" style="width: 50px">{{val.weight}}</span>
+                        <span class="weightName" style="width: 30px">{{val.weight}}</span>
                         <!-- <span class="weightValue" style="width: 50px">{{val.value}}</span> -->
                       </div>
-                    </Card>
+                    </div>
                   </div>
                 </div>
                 <div class="button_part">
@@ -101,7 +101,7 @@
                       <img src="../assets/12.svg" @click="increaseDom" />
                     </div>
                   </div>
-                  <div style="margin: 11px 16px 40px 16px;">
+                  <div width="100%" style="margin: 11px 16px 40px 16px;">
                     <Select
                       v-model="dealerId"
                       height="40px"
@@ -126,7 +126,7 @@
                       class="weight_icon"
                       src="../assets/weight.svg"
                     />
-                    <Card width="270px" height="60px">
+                    <div class="weightClass" height="60px">
                       <div v-if="edit" class="tagList">
                         <span class="weightName" style="width: 100px">{{key}}</span>
                         <i-input v-model="val.weight" style="width: 50px"></i-input>
@@ -137,16 +137,16 @@
                         <span class="weightName" style="width: 50px">{{val.weight}}</span>
                         <span class="weightValue" style="width: 50px">{{val.value}}</span>
                       </div>
-                    </Card>
+                    </div>
                   </div>
                   <div class="weight_item" v-if="add">
-                    <Card width="270px" height="60px" style="background: #3D3D3D;">
+                    <div class="weightClass" height="60px" style="background: #3D3D3D;">
                       <div class="tagList">
                         <i-input v-model="name" style="width: 100px"></i-input>
                         <i-input v-model="weight" style="width: 50px"></i-input>
                         <i-input v-model="value" style="width: 50px"></i-input>
                       </div>
-                    </Card>
+                    </div>
                   </div>
                 </div>
                 <div class="button_part">
@@ -709,6 +709,7 @@ export default {
           .scroll {
             height: calc(100% - 65px);
             overflow: auto;
+            overflow-x: hidden;
           }
 
           .tagName {
@@ -960,6 +961,14 @@ export default {
   .weight_item {
     margin: 0 16px 20px;
     position: relative;
+    .weightClass {
+      background: #3D3D3D;
+      border-radius: 0.5px;
+      width: 100%;
+      display: flex;
+      padding: 16px;
+      height: 64px;
+    }
 
     .weight_icon {
       position: absolute;
@@ -977,6 +986,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 
     .weightName {
       font-size: 16px;
