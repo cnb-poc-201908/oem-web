@@ -996,6 +996,15 @@
 
           .ivu-card:first-child {
             height: calc(100% - 65px);
+
+            .ivu-card-body {
+              height: 100%;
+
+              ul {
+                height: calc(100% - 42px);
+                overflow: auto;
+              }
+            }
           }
         }
       }
