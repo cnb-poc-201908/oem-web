@@ -947,7 +947,7 @@
             }
 
             .scroll {
-              height: calc(100% - 225px);
+              height: calc(100% - 65px);
               overflow: auto;
             }
 
@@ -993,6 +993,10 @@
           width: 100%;
           height: calc(100% - 156px);
           background: #282828;
+
+          .ivu-card:first-child {
+            height: calc(100% - 65px);
+          }
         }
       }
 
@@ -1245,6 +1249,16 @@
     color: #fff;
     letter-spacing: .18px;
     border: none;
+  }
+
+  .ivu-tabs {
+    height: 100%;
+  }
+
+
+
+  .ivu-tabs-tabpane {
+    height: 100%;
   }
 
 </style>
