@@ -70,7 +70,8 @@
         columns1: [
         {
           title: "物料号",
-          key: "materialsId"
+          key: "materialsId",
+          width: 90,
         },
         {
           title: "车型",
@@ -94,7 +95,9 @@
         },
         {
           title: " ",
-          key: "blank"
+          key: "blank",
+          width: 5,
+          className: 'black'
         },
         {
           title: "供应商名称",
@@ -102,23 +105,24 @@
         },
         {
           title: "订单号",
-          key: "orderId"
+          key: "orderId",
+          width: 90,
         },
         {
           title: "车型",
-          key: "configDesc"
+          key: "configDescT"
         },
         {
           title: "外观颜色",
-          key: "colorDesc"
+          key: "colorDescT"
         },
         {
           title: "内饰",
-          key: "upholsteryDesc"
+          key: "upholsteryDescT"
         },
         {
           title: "配置",
-          key: "addDescs"
+          key: "addDescsT"
         }, ],
         data1: [],
         color: [
@@ -233,19 +237,16 @@
                 "configDesc": element.configDesc,
                 "colorDesc": element.colorDesc,
                 "upholsteryDesc": element.upholsteryDesc,
-                "addDescs": element.addDescs,
+                "addDescs": element.addDescs.join(" / "),
                 "vin": element.vin,
                 "blank": "",
                 "dealerName": element.dealerName,
                 "orderId": element.orderId,
-                "configDesc": element.configDescT,
-                "colorDesc": element.colorDescT,
-                "upholsteryDesc": element.upholsteryDescT,
-                "addDescs": element.addDescsT,
-                "cellClassName": {
-                  "materialsId": "different",
-
-                }
+                "configDescT": element.configDescT,
+                "colorDescT": element.colorDescT,
+                "upholsteryDescT": element.upholsteryDescT,
+                "addDescsT": element.addDescsT.join(" / "),
+                "cellClassName": element.cellClassName
               })
             });
             console.log(this.data1);
@@ -266,7 +267,15 @@
 </script>
 <style lang="scss">
   .different {
-    color: #f00;
+    color: rgb(247, 183, 47);
+  }
+
+  .ivu-table td {
+    padding: 5px 0;
+  }
+
+  .ivu-table th.black, .ivu-table td.black {
+    background: #171717 !important;
   }
 
   .header {
@@ -364,9 +373,9 @@
       &:first-child {
         flex: 1;
 
-        .ivu-table-header {
-          border-top: 2px solid #0062ff;
-        }
+        // .ivu-table-header {
+        //   border-top: 2px solid #0062ff;
+        // }
       }
 
       .ivu-table-body {
