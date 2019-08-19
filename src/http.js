@@ -18,7 +18,12 @@ export default {
     return axios.post(`${this.DATA_URL}/model/models/${dealerId}`, body);
   },
   getSankey(matchStatus) {
-    return axios.get(`${this.DATA_URL}/order/orders/orderflows?matchStatus=${matchStatus}`);
+    if (matchStatus === 'all') {
+      return axios.get(`${this.DATA_URL}/order/orders/orderflows`);
+    } else {
+      return axios.get(`${this.DATA_URL}/order/orders/orderflows?matchStatus=${matchStatus}`);
+    }
+
   },
   getReport() {
     return axios.get(`${this.DATA_URL}/engine/api/v1/report`);
@@ -31,5 +36,8 @@ export default {
   },
   getSmartEngine() {
     return axios.get(`${this.DATA_URL}/engine/api/v1/smartEngine`);
+  },
+  putModelsOem(body) {
+    return axios.put(`${this.DATA_URL}/model/models/oem/update`, body);
   }
 }

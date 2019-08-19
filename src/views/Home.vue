@@ -54,7 +54,7 @@
                     <div class="param">参数</div>
                     <div class="dealerIcon">
                       <img style="margin-right: 10px;" src="../assets/16.svg" @click="editOem" />
-                      <img src="../assets/12.svg"/>
+                      <img src="../assets/12.svg" />
                     </div>
                   </div>
                   <div class="weight_item tagList list_title">
@@ -83,8 +83,13 @@
                   </div>
                 </div>
                 <div class="button_part">
-                  <button v-if="editOemFlag" class="againMapping" width="100%" @click="update">更新</button>
-                  <button v-if="!editOemFlag && !add" class="againMapping" width="100%" @click="afresh">重新匹配</button>
+                  <button v-if="editOemFlag" class="againMapping" width="100%" @click="updateOem">更新</button>
+                  <button
+                    v-if="!editOemFlag && !add"
+                    class="againMapping"
+                    width="100%"
+                    @click="afresh"
+                  >重新匹配</button>
                 </div>
               </TabPane>
               <TabPane label="经销商" name="name1">
@@ -146,7 +151,12 @@
                 </div>
                 <div class="button_part">
                   <button v-if="edit" class="againMapping" width="100%" @click="update">更新</button>
-                  <button v-if="!edit && !add" class="againMapping" width="100%" @click="afresh">重新匹配</button>
+                  <button
+                    v-if="!edit && !add"
+                    class="againMapping"
+                    width="100%"
+                    @click="afresh"
+                  >重新匹配</button>
                   <button v-if="add" class="againMapping" width="100%" @click="addParam">保存</button>
                 </div>
               </TabPane>
@@ -426,7 +436,7 @@ export default {
           }
         });
       });
-      this.$store.commit("setDealerReportList", res.data.data.slice(0, 10));
+      this.$store.commit("setDealerReportList", res.data.data);
     });
     api.getModelsOem().then(res => {
       this.$store.commit("setModelsOemList", res.data.data);
@@ -512,14 +522,25 @@ export default {
       console.log(this.add);
     },
     update() {
+      this.spinShow = true;
       console.log(this.weightList);
       api.putModels(this.dealerId, this.weightList).then(res => {
         console.log(res.data);
+        this.edit = false;
+        this.spinShow = false;
       });
     },
     editParam() {
       this.edit = this.edit === true ? false : true;
       console.log(this.edit);
+    },
+    updateOem() {
+      this.spinShow = true;
+      api.putModelsOem(this.modelsOemList).then(res => {
+        console.log(res.data);
+        this.editOemFlag = false;
+        this.spinShow = false;
+      });
     },
     addParam() {
       let body = {};
@@ -538,16 +559,24 @@ export default {
     editOem() {
       this.editOemFlag = this.editOemFlag === true ? false : true;
       console.log(this.editOemFlag);
-
     },
     afresh() {
       this.spinShow = true;
-      api.getSmartEngine().then(
-        res => {
-          console.log(res.data.data);
-          this.spinShow = false;
-        }
-      );
+      api.getSmartEngine().then(res => {
+        console.log(res.data.data);
+        api.getDealerReport().then(res => {
+          res.data.data.forEach(element => {
+            this.dealerList.forEach(item => {
+              if (element.dealerId == item.value) {
+                element.name = item.label;
+              }
+            });
+          });
+          this.$store.commit("setDealerReportList", res.data.data);
+        });
+
+        this.spinShow = false;
+      });
     }
   }
 };
