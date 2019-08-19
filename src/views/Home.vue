@@ -169,7 +169,7 @@
             <ul>
               <li class="top_li" @click="openModel" v-for="(item, i) in dealerReportList" :key="i">
                 <div class="top_form">
-                  <span>{{i+1}}. {{item.dealerId}}</span>
+                  <span>{{i+1}}. {{item.name}}</span>
                   <span>{{item.ratio}}%</span>
                 </div>
               </li>
@@ -419,6 +419,13 @@ export default {
       this.$store.commit("setRecommendMapping", res.data.data.recommand);
     });
     api.getDealerReport().then(res => {
+      res.data.data.forEach(element => {
+        this.dealerList.forEach(item => {
+          if (element.dealerId == item.value) {
+            element.name = item.label;
+          }
+        });
+      });
       this.$store.commit("setDealerReportList", res.data.data.slice(0, 10));
     });
     api.getModelsOem().then(res => {

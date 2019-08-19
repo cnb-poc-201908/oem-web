@@ -32,6 +32,4 @@ export default {
   getSmartEngine() {
     return axios.get(`${this.DATA_URL}/engine/api/v1/smartEngine`);
   }
-
-
 }
