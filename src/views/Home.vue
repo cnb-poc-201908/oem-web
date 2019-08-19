@@ -896,6 +896,7 @@ export default {
           }
           .board_content {
             width: 100%;
+            height: 100%;
             padding: 10%;
             color: #ffffff;
             .title {
