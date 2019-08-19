@@ -397,7 +397,7 @@
 
     .container {
       height: calc(100% - 60px);
-      display: flex;
+      // display: flex;
 
       .ivu-card-body {
         .ivu-table-wrapper {
@@ -406,13 +406,8 @@
       }
 
       .ivu-card {
-        &:first-child {
-          flex: 1;
-
-          // .ivu-table-header {
-          //   border-top: 2px solid #0062ff;
-          // }
-        }
+        // flex: 1;
+        height: 100%;
 
         .ivu-table-body {
           height: calc(100% - 40px);

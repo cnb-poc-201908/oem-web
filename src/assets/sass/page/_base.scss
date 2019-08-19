@@ -161,3 +161,10 @@ svg {
   height: calc(100% - 40px);
   overflow: auto;
 }
+.ivu-table-cell {
+  span {
+    display: block;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+}
