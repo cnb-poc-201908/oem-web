@@ -47,6 +47,10 @@
             label: '北京市'
           },
           {
+            value: '天津市',
+            label: '天津市'
+          },
+          {
             value: '河北省',
             label: '河北省'
           }]
@@ -329,10 +333,6 @@
     margin-left: 20px;
     vertical-align: middle;
     display: inline-block;
-  }
-
-  .ivu-select-selection {
-    width: 150px;
   }
 
   .ivu-table {
