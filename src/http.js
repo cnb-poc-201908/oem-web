@@ -40,7 +40,7 @@ export default {
   putModelsOem(body) {
     return axios.put(`${this.DATA_URL}/model/models/oem/update`, body);
   },
-  getTable(r, i) {
-    return axios.get(`${this.DATA_URL}/order/orders/distribution??region=${r}&province=${i}`);
+  getTable(m, r, i) {
+    return axios.get(`${this.DATA_URL}/order/orders/distribution?matchStatus=${m}&region=${r}&province=${i}`);
   }
 }

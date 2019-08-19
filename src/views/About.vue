@@ -3,7 +3,6 @@
     <Header></Header>
     <div class="content">
       <div class="header">
-
         <div class="title">{{name}}</div>
         <Cascader :data="cityList" change-on-select @on-change="selectCity"></Cascader>
       </div>
@@ -11,13 +10,13 @@
         <TabPane label="潜在关联表" name="name1"> -->
       <div class="container">
         <Card :bordered="false">
-          <p slot="title">库存基本信息</p>
+          <!-- <p slot="title">库存基本信息</p> -->
           <Table :columns="columns1" :data="data1"></Table>
         </Card>
-        <Card :bordered="false">
+        <!-- <Card :bordered="false">
           <p slot="title">经销商信息</p>
           <Table :columns="columns2" :data="data2"></Table>
-        </Card>
+        </Card> -->
       </div>
       <!-- </TabPane>
         <TabPane label="潜在关联图" name="name2">
@@ -70,12 +69,8 @@
         }],
         columns1: [
         {
-          title: "物料订单号",
-          key: "orderId"
-        },
-        {
-          title: "品牌",
-          key: "brand"
+          title: "物料号",
+          key: "materialsId"
         },
         {
           title: "车型",
@@ -90,24 +85,42 @@
           key: "upholsteryDesc"
         },
         {
+          title: "配置",
+          key: "addDescs"
+        },
+        {
           title: "车架号",
           key: "vin"
         },
         {
-          title: "下线时间",
-          key: "apw"
-        }],
-        data1: [],
-        columns2: [
+          title: " ",
+          key: "blank"
+        },
         {
           title: "供应商名称",
           key: "dealerName"
         },
         {
-          title: "物料订单号",
+          title: "订单号",
           key: "orderId"
-        }],
-        data2: [],
+        },
+        {
+          title: "车型",
+          key: "configDesc"
+        },
+        {
+          title: "外观颜色",
+          key: "colorDesc"
+        },
+        {
+          title: "内饰",
+          key: "upholsteryDesc"
+        },
+        {
+          title: "配置",
+          key: "addDescs"
+        }, ],
+        data1: [],
         color: [
           "#78b4ff",
           "#f66bc7",
@@ -212,21 +225,27 @@
       getData(r, i) {
         this.data1 = [],
           this.data2 = [],
-          api.getTable(r, i).then((res) => {
+          api.getTable(this.mappingType, r, i).then((res) => {
             // this.data1 = res.data.data;
             res.data.data.forEach(element => {
               this.data1.push({
-                "orderId": element.orderId,
-                "brand": "BMW",
+                "materialsId": element.materialsId,
                 "configDesc": element.configDesc,
                 "colorDesc": element.colorDesc,
                 "upholsteryDesc": element.upholsteryDesc,
+                "addDescs": element.addDescs,
                 "vin": element.vin,
-                "apw": element.apw,
-              })
-              this.data2.push({
+                "blank": "",
                 "dealerName": element.dealerName,
-                "orderId": element.dealerName,
+                "orderId": element.orderId,
+                "configDesc": element.configDescT,
+                "colorDesc": element.colorDescT,
+                "upholsteryDesc": element.upholsteryDescT,
+                "addDescs": element.addDescsT,
+                "cellClassName": {
+                  "materialsId": "different",
+
+                }
               })
             });
             console.log(this.data1);
@@ -246,6 +265,10 @@
 
 </script>
 <style lang="scss">
+  .different {
+    color: #f00;
+  }
+
   .header {
     margin-bottom: 20px;
   }
@@ -332,8 +355,6 @@
     display: flex;
 
     .ivu-card-body {
-      height: calc(100% - 50px);
-
       .ivu-table-wrapper {
         height: 100%;
       }
@@ -341,21 +362,26 @@
 
     .ivu-card {
       &:first-child {
-        flex: 2;
+        flex: 1;
 
         .ivu-table-header {
           border-top: 2px solid #0062ff;
         }
       }
 
-      &:last-child {
-        flex: 1;
-        margin-left: 10px;
-
-        .ivu-table-header {
-          border-top: 2px solid #20d5d2;
-        }
+      .ivu-table-body {
+        height: calc(100% - 40px);
+        overflow: auto;
       }
+
+      // &:last-child {
+      //   flex: 1;
+      //   margin-left: 10px;
+
+      //   .ivu-table-header {
+      //     border-top: 2px solid #20d5d2;
+      //   }
+      // }
 
       .ivu-card-head {
         color: #8c8c8c;
