@@ -72,62 +72,64 @@
           }],
         }],
         columns1: [
-        {
-          title: "物料号",
-          key: "materialsId",
-          width: 90,
-        },
-        {
-          title: "车型",
-          key: "configDesc"
-        },
-        {
-          title: "外观颜色",
-          key: "colorDesc"
-        },
-        {
-          title: "内饰",
-          key: "upholsteryDesc"
-        },
-        {
-          title: "配置",
-          key: "addDescs"
-        },
-        {
-          title: "车架号",
-          key: "vin"
-        },
-        {
-          title: " ",
-          key: "blank",
-          width: 5,
-          className: 'black'
-        },
-        {
-          title: "供应商名称",
-          key: "dealerName"
-        },
-        {
-          title: "订单号",
-          key: "orderId",
-          width: 90,
-        },
-        {
-          title: "车型",
-          key: "configDescT"
-        },
-        {
-          title: "外观颜色",
-          key: "colorDescT"
-        },
-        {
-          title: "内饰",
-          key: "upholsteryDescT"
-        },
-        {
-          title: "配置",
-          key: "addDescsT"
-        }, ],
+          {
+            title: "物料号",
+            key: "materialsId",
+            width: 90,
+          },
+          {
+            title: "车架号",
+            key: "vin"
+          },
+          {
+            title: "车型",
+            key: "configDesc"
+          },
+          {
+            title: "外观颜色",
+            key: "colorDesc"
+          },
+          {
+            title: "内饰",
+            key: "upholsteryDesc"
+          },
+          {
+            title: "配置",
+            key: "addDescs"
+          },
+
+          {
+            title: " ",
+            key: "blank",
+            width: 5,
+            className: 'black'
+          },
+          {
+            title: "供应商名称",
+            key: "dealerName"
+          },
+          {
+            title: "订单号",
+            key: "orderId",
+            width: 90,
+          },
+          {
+            title: "车型",
+            key: "configDescT"
+          },
+          {
+            title: "外观颜色",
+            key: "colorDescT"
+          },
+          {
+            title: "内饰",
+            key: "upholsteryDescT"
+          },
+          {
+            title: "配置",
+            key: "addDescsT"
+          }
+        ],
         data1: [],
         color: [
           "#78b4ff",
@@ -238,11 +240,11 @@
             res.data.data.forEach(element => {
               this.data1.push({
                 "materialsId": element.materialsId,
+                "vin": element.vin,
                 "configDesc": element.configDesc,
                 "colorDesc": element.colorDesc,
                 "upholsteryDesc": element.upholsteryDesc,
                 "addDescs": element.addDescs.join(" / "),
-                "vin": element.vin,
                 "blank": "",
                 "dealerName": element.dealerName,
                 "orderId": element.orderId,
@@ -270,134 +272,6 @@
 
 </script>
 <style lang="scss">
-  .different {
-    color: rgb(247, 183, 47);
-  }
-
-  .ivu-table td {
-    padding: 5px 0;
-  }
-
-  .ivu-table th.black, .ivu-table td.black {
-    background: #171717 !important;
-  }
-
-  .header {
-    margin-bottom: 20px;
-  }
-
-  .ivu-cascader {
-    width: 200px;
-    display: inline-block;
-    margin-left: 20px;
-
-    .ivu-cascader-menu-item {
-      color: #c6c6c6;
-
-      &:hover {
-        color: #515a6e;
-      }
-    }
-
-    .ivu-cascader-menu-item-active {
-      color: #515a6e;
-    }
-
-    .ivu-cascader-menu {
-      border: 0 none;
-    }
-
-    .ivu-input {
-      border: 1px solid #dcdee2 !important;
-      font-size: 12px !important;
-      letter-spacing: .18px;
-      color: #c6c6c6 !important;
-      line-height: 32px !important;
-    }
-  }
-
-  .ivu-select-item, .ivu-select-selected-value {
-    color: #bcbcbc;
-  }
-
-  .ivu-select-item:hover, .ivu-select-item-selected {
-    color: #515a6e;
-  }
-
-  .title {
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  .ivu-select {
-    margin-left: 20px;
-    vertical-align: middle;
-    display: inline-block;
-  }
-
-  .ivu-table {
-    border-right: 1px solid #282828;
-    background-color: #282828;
-  }
-
-  .ivu-table:after, .ivu-table:before {
-    background-color: transparent;
-  }
-
-  .ivu-card-head {
-    border-bottom: 0 none;
-
-    p {
-      color: #8c8c8c;
-    }
-  }
-
-  .ivu-card-body {
-    background-color: #282828;
-    height: 100%;
-    overflow: auto;
-  }
-
-
-  .container {
-    height: calc(100% - 60px);
-    display: flex;
-
-    .ivu-card-body {
-      .ivu-table-wrapper {
-        height: 100%;
-      }
-    }
-
-    .ivu-card {
-      &:first-child {
-        flex: 1;
-
-        // .ivu-table-header {
-        //   border-top: 2px solid #0062ff;
-        // }
-      }
-
-      .ivu-table-body {
-        height: calc(100% - 40px);
-        overflow: auto;
-      }
-
-      // &:last-child {
-      //   flex: 1;
-      //   margin-left: 10px;
-
-      //   .ivu-table-header {
-      //     border-top: 2px solid #20d5d2;
-      //   }
-      // }
-
-      .ivu-card-head {
-        color: #8c8c8c;
-      }
-    }
-  }
-
   .about {
     background-color: #171717;
     height: 100%;
@@ -428,6 +302,134 @@
           width: 100%;
           // height: calc(100% - 200px);
           height: 5000px;
+        }
+      }
+    }
+
+    .different {
+      color: rgb(247, 183, 47);
+    }
+
+    .ivu-table td {
+      padding: 5px 0;
+    }
+
+    .ivu-table th.black, .ivu-table td.black {
+      background: #171717 !important;
+    }
+
+    .header {
+      margin-bottom: 20px;
+    }
+
+    .ivu-cascader {
+      width: 200px;
+      display: inline-block;
+      margin-left: 20px;
+
+      .ivu-cascader-menu-item {
+        color: #c6c6c6;
+
+        &:hover {
+          color: #515a6e;
+        }
+      }
+
+      .ivu-cascader-menu-item-active {
+        color: #515a6e;
+      }
+
+      .ivu-cascader-menu {
+        border: 0 none;
+      }
+
+      .ivu-input {
+        border: 1px solid #dcdee2 !important;
+        font-size: 12px !important;
+        letter-spacing: .18px;
+        color: #c6c6c6 !important;
+        line-height: 32px !important;
+      }
+    }
+
+    .ivu-select-item, .ivu-select-selected-value {
+      color: #bcbcbc;
+    }
+
+    .ivu-select-item:hover, .ivu-select-item-selected {
+      color: #515a6e;
+    }
+
+    .title {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .ivu-select {
+      margin-left: 20px;
+      vertical-align: middle;
+      display: inline-block;
+    }
+
+    .ivu-table {
+      border-right: 1px solid #282828;
+      background-color: #282828;
+    }
+
+    .ivu-table:after, .ivu-table:before {
+      background-color: transparent;
+    }
+
+    .ivu-card-head {
+      border-bottom: 0 none;
+
+      p {
+        color: #8c8c8c;
+      }
+    }
+
+    .ivu-card-body {
+      background-color: #282828;
+      height: 100%;
+      overflow: auto;
+    }
+
+
+    .container {
+      height: calc(100% - 60px);
+      display: flex;
+
+      .ivu-card-body {
+        .ivu-table-wrapper {
+          height: 100%;
+        }
+      }
+
+      .ivu-card {
+        &:first-child {
+          flex: 1;
+
+          // .ivu-table-header {
+          //   border-top: 2px solid #0062ff;
+          // }
+        }
+
+        .ivu-table-body {
+          height: calc(100% - 40px);
+          overflow: auto;
+        }
+
+        // &:last-child {
+        //   flex: 1;
+        //   margin-left: 10px;
+
+        //   .ivu-table-header {
+        //     border-top: 2px solid #20d5d2;
+        //   }
+        // }
+
+        .ivu-card-head {
+          color: #8c8c8c;
         }
       }
     }
