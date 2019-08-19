@@ -2,318 +2,134 @@
   <div class="about">
     <Header></Header>
     <div class="content">
-      <div class="title">{{name}}</div>
-      <Card class="sankey" :bordered="false">
-        <v-chart :options="sankeyOptions" :autoresize="true"/>
-      </Card>
+      <div class="header">
+
+        <div class="title">{{name}}</div>
+        <Cascader :data="cityList" change-on-select @on-change="selectCity"></Cascader>
+      </div>
+      <!-- <Tabs value="name1">
+        <TabPane label="潜在关联表" name="name1"> -->
+      <div class="container">
+        <Card :bordered="false">
+          <p slot="title">库存基本信息</p>
+          <Table :columns="columns1" :data="data1"></Table>
+        </Card>
+        <Card :bordered="false">
+          <p slot="title">经销商信息</p>
+          <Table :columns="columns2" :data="data2"></Table>
+        </Card>
+      </div>
+      <!-- </TabPane>
+        <TabPane label="潜在关联图" name="name2">
+          <Card class="sankey" :bordered="false">
+            <v-chart :options="sankeyOptions" :autoresize="true" />
+          </Card>
+        </TabPane>
+      </Tabs> -->
     </div>
   </div>
 </template>
 <script>
-import Header from "@/components/header.vue";
-export default {
-  name: "about",
-  data() {
-    return {
-      color: [
-        "#78b4ff",
-        "#f66bc7",
-        "#2bcba7",
-        "#ff8896",
-        "#79c628",
-        "#6c93ee",
-        "#a9abff",
-        "#f7a23f",
-        "#27bae7",
-        "#ff6d9d",
-        "#cb79ff",
-        "#f95b5a",
-        "#ccaf27",
-        "#38b99c",
-        "#93d0ff",
-        "#bd74e0",
-        "#fd77da",
-        "#dea700"
-      ],
-      city: [
+  import Header from "@/components/header.vue";
+  import api from "@/http"
+  export default {
+    name: "about",
+    data() {
+      return {
+        region: '',
+        province: '',
+        cityList: [
         {
-          name: "深圳市",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
+          value: '华北区',
+          label: '华北区',
+          children: [
+          {
+            value: '北京市',
+            label: '北京市'
+          },
+          {
+            value: '河北省',
+            label: '河北省'
+          }]
+        }, {
+          value: '华东区',
+          label: '华东区',
+          children: [
+          {
+            value: '上海市',
+            label: '上海市'
+          },
+          {
+            value: '江苏省',
+            label: '江苏省',
+          },
+          {
+            value: '浙江省',
+            label: '浙江省',
+          }],
+        }],
+        columns1: [
+        {
+          title: "物料订单号",
+          key: "orderId"
         },
         {
-          name: "广州市",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
+          title: "品牌",
+          key: "brand"
         },
         {
-          name: "珠海市",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
+          title: "车型",
+          key: "configDesc"
         },
         {
-          name: "汕头市",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
+          title: "外观颜色",
+          key: "colorDesc"
         },
         {
-          name: "佛山市",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
+          title: "内饰",
+          key: "upholsteryDesc"
         },
         {
-          name: "深圳市2",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
+          title: "车架号",
+          key: "vin"
         },
         {
-          name: "广州市2",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
+          title: "下线时间",
+          key: "apw"
+        }],
+        data1: [],
+        columns2: [
+        {
+          title: "供应商名称",
+          key: "dealerName"
         },
         {
-          name: "珠海2市",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
-        },
-        {
-          name: "汕头市2",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
-        },
-        {
-          name: "佛山市2",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
-        },
-        {
-          name: "深圳市3",
-          plts: [
-            { name: "PM25", rate: 95 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
-        },
-        {
-          name: "广州市3",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
-        },
-        {
-          name: "珠海3市",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
-        },
-        {
-          name: "汕头市3",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
-        },
-        {
-          name: "佛山市3",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
-        },
-        {
-          name: "深圳市4",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
-        },
-        {
-          name: "广州市4",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
-        },
-        {
-          name: "珠海市4",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
-        },
-        {
-          name: "汕头市4",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
-        },
-        {
-          name: "佛山市4",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
-        },
-        {
-          name: "深圳市5",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 35 }
-          ]
-        },
-        {
-          name: "广州市5",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 35 },
-            { name: "SO2", rate: 15 }
-          ]
-        },
-        {
-          name: "珠海市5",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
-        },
-        {
-          name: "汕头市5",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 45 },
-            { name: "O3", rate: 15 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
-        },
-        {
-          name: "佛山市5",
-          plts: [
-            { name: "PM25", rate: 25 },
-            { name: "PM10", rate: 15 },
-            { name: "O3", rate: 35 },
-            { name: "CO", rate: 15 },
-            { name: "NO2", rate: 15 },
-            { name: "SO2", rate: 15 }
-          ]
-        }
-      ],
-      option: {
-        series: [
+          title: "物料订单号",
+          key: "orderId"
+        }],
+        data2: [],
+        color: [
+          "#78b4ff",
+          "#f66bc7",
+          "#2bcba7",
+          "#ff8896",
+          "#79c628",
+          "#6c93ee",
+          "#a9abff",
+          "#f7a23f",
+          "#27bae7",
+          "#ff6d9d",
+          "#cb79ff",
+          "#f95b5a",
+          "#ccaf27",
+          "#38b99c",
+          "#93d0ff",
+          "#bd74e0",
+          "#fd77da",
+          "#dea700"
+        ],
+        option: {
+          series: [
           {
             type: "sankey",
             data: [],
@@ -344,92 +160,242 @@ export default {
                 opacity: 1
               }
             }
-          }
-        ]
-      }
-    };
-  },
-  components: {
-    Header
-  },
-  computed: {
-    mappingType() {
-      return this.$store.state.mappingType;
+          }]
+        }
+      };
     },
-    name() {
-      if (this.mappingType === 'all') {
-        return '全部物料';
-      }
-      if (this.mappingType === '1') {
-        return '完全匹配';
-      }
-      if (this.mappingType === '2') {
-        return '最优匹配';
-      }
-      if (this.mappingType === '3') {
-        return '推荐匹配';
-      } 
+    components: {
+      Header
     },
-    sankeyData() {
-      return this.$store.state.sankeyData;
+    computed: {
+      mappingType() {
+        return this.$store.state.mappingType;
+      },
+      name() {
+        if (this.mappingType === 'all') {
+          return '全部物料';
+        }
+        if (this.mappingType === '1') {
+          return '完全匹配';
+        }
+        if (this.mappingType === '2') {
+          return '最优匹配';
+        }
+        if (this.mappingType === '3') {
+          return '推荐匹配';
+        }
+      },
+      // sankeyData() {
+      //   return this.$store.state.sankeyData;
+      // },
+      // sankeyLinks() {
+      //   return this.$store.state.sankeyLinks;
+      // },
+      // sankeyOptions() {
+      //   let options = this.deepClone(this.option);
+      //   let data = [];
+      //   let links = [];
+      //   options.series[0].data = this.sankeyData;
+      //   options.series[0].links = this.sankeyLinks;
+      //   return options;
+      // }
     },
-    sankeyLinks() {
-      return this.$store.state.sankeyLinks;
+    mounted() {
+      // this.$nextTick(() => {
+      //   // console.log("this :", this);
+      // });
     },
-    sankeyOptions() {
-      let options = this.deepClone(this.option);
-      let data = [];
-      let links = [];
-      options.series[0].data = this.sankeyData;
-      options.series[0].links = this.sankeyLinks;
-      return options;
+    created() {
+      this.getData();
+    },
+    methods: {
+      getData(r, i) {
+        this.data1 = [],
+          this.data2 = [],
+          api.getTable(r, i).then((res) => {
+            // this.data1 = res.data.data;
+            res.data.data.forEach(element => {
+              this.data1.push({
+                "orderId": element.orderId,
+                "brand": "BMW",
+                "configDesc": element.configDesc,
+                "colorDesc": element.colorDesc,
+                "upholsteryDesc": element.upholsteryDesc,
+                "vin": element.vin,
+                "apw": element.apw,
+              })
+              this.data2.push({
+                "dealerName": element.dealerName,
+                "orderId": element.dealerName,
+              })
+            });
+            console.log(this.data1);
+          })
+      },
+      selectCity(value) {
+        const [r, i] = value;
+        this.getData(r, i);
+      },
+      deepClone(obj) {
+        let _obj = JSON.stringify(obj),
+          objClone = JSON.parse(_obj);
+        return objClone;
+      }
     }
-  },
-  mounted() {
-    // this.$nextTick(() => {
-    //   // console.log("this :", this);
-    // });
-  },
-  created() {
+  };
 
-  },
-  methods: {
-    deepClone(obj) {
-      let _obj = JSON.stringify(obj),
-        objClone = JSON.parse(_obj);
-      return objClone;
-    }
-  }
-};
 </script>
 <style lang="scss">
-.about {
-  background-color: #171717;
-  height: 100%;
-  .content {
-    padding: 90px 30px 20px;
-    width: 100%;
-    // height: calc(100% - 126px);
+  .header {
+    margin-bottom: 20px;
+  }
+
+  .ivu-cascader {
+    width: 200px;
+    display: inline-block;
+    margin-left: 20px;
+
+    .ivu-cascader-menu-item {
+      color: #c6c6c6;
+
+      &:hover {
+        color: #515a6e;
+      }
+    }
+
+    .ivu-cascader-menu-item-active {
+      color: #515a6e;
+    }
+
+    .ivu-cascader-menu {
+      border: 0 none;
+    }
+
+    .ivu-input {
+      border: 1px solid #dcdee2 !important;
+      font-size: 12px !important;
+      letter-spacing: .18px;
+      color: #c6c6c6 !important;
+      line-height: 32px !important;
+    }
+  }
+
+  .ivu-select-item, .ivu-select-selected-value {
+    color: #bcbcbc;
+  }
+
+  .ivu-select-item:hover, .ivu-select-item-selected {
+    color: #515a6e;
+  }
+
+  .title {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .ivu-select {
+    margin-left: 20px;
+    vertical-align: middle;
+    display: inline-block;
+  }
+
+  .ivu-select-selection {
+    width: 150px;
+  }
+
+  .ivu-table {
+    border-right: 1px solid #282828;
+    background-color: #282828;
+  }
+
+  .ivu-table:after, .ivu-table:before {
+    background-color: transparent;
+  }
+
+  .ivu-card-head {
+    border-bottom: 0 none;
+
+    p {
+      color: #8c8c8c;
+    }
+  }
+
+  .ivu-card-body {
+    background-color: #282828;
     height: 100%;
-    .title {
-      font-weight: bold;
-      font-size: 16px;
-      color: #ffffff;
-      letter-spacing: 0.18px;
-      margin-bottom: 12px;
+    overflow: auto;
+  }
+
+
+  .container {
+    height: calc(100% - 60px);
+    display: flex;
+
+    .ivu-card-body {
+      height: calc(100% - 50px);
+
+      .ivu-table-wrapper {
+        height: 100%;
+      }
     }
+
     .ivu-card {
-      background: #282828;
-    }
-    .sankey {
-      width: 100%;
-      height: 100%;
-      .echarts {
-        width: 100%;
-        // height: calc(100% - 200px);
-        height: 5000px;
+      &:first-child {
+        flex: 2;
+
+        .ivu-table-header {
+          border-top: 2px solid #0062ff;
+        }
+      }
+
+      &:last-child {
+        flex: 1;
+        margin-left: 10px;
+
+        .ivu-table-header {
+          border-top: 2px solid #20d5d2;
+        }
+      }
+
+      .ivu-card-head {
+        color: #8c8c8c;
       }
     }
   }
-}
+
+  .about {
+    background-color: #171717;
+    height: 100%;
+
+    .content {
+      padding: 90px 30px 20px;
+      width: 100%;
+      // height: calc(100% - 126px);
+      height: 100%;
+
+      .title {
+        font-weight: bold;
+        font-size: 16px;
+        color: #fff;
+        letter-spacing: .18px;
+        // margin-bottom: 12px;
+      }
+
+      .ivu-card {
+        background: #282828;
+      }
+
+      .sankey {
+        width: 100%;
+        height: 100%;
+
+        .echarts {
+          width: 100%;
+          // height: calc(100% - 200px);
+          height: 5000px;
+        }
+      }
+    }
+  }
+
 </style>
