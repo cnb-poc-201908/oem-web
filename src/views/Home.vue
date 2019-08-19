@@ -869,13 +869,13 @@ export default {
 <style lang="scss" scoped>
 .home {
   background-color: #171717;
-  height: 100vh;
+  height: 100%;
   .content {
     padding: 90px 30px 30px;
     height: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    // align-items: center;
     .content_left {
       width: 75%;
       height: 100%;
@@ -884,6 +884,7 @@ export default {
         width: 100%;
         height: 27%;
         display: flex;
+        flex: 1;
         justify-content: space-between;
         margin-bottom: 20px;
         .board {
@@ -937,7 +938,7 @@ export default {
           height: 100%;
           .echarts {
             width: 100%;
-            height: 100%;
+            // height: 100%;
           }
         }
         .bottom_right {
