@@ -8,7 +8,12 @@ const initialState = () => ({
   weightList: {},
   dealerId: '',
   sankeyData: [],
-  sankeyLinks: []
+  sankeyLinks: [],
+  material: '',
+  completeMapping: '',
+  optimalMapping: '',
+  recommendMapping: '',
+  dealerReportList: []
 });
 
 export default new Vuex.Store({
@@ -28,6 +33,21 @@ export default new Vuex.Store({
     },
     setSankeyLinks(state, value) {
       state.sankeyLinks = value;
+    },
+    setMaterial(state, value) {
+      state.material = value;
+    },
+    setCompleteMapping(state, value) {
+      state.completeMapping = value;
+    },
+    setOptimalMapping(state, value) {
+      state.optimalMapping = value;
+    },
+    setRecommendMapping(state, value) {
+      state.recommendMapping = value;
+    },
+    setDealerReportList(state, value) {
+      state.dealerReportList = value;
     }
   },
   actions: {

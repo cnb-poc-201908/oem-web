@@ -19,6 +19,13 @@ export default {
   },
   getSankey(matchStatus) {
     return axios.get(`${this.DATA_URL}/order/orders/orderflows?matchStatus=${matchStatus}`);
+  },
+  getReport() {
+    return axios.get(`${this.DATA_URL}/engine/api/v1/report`);
+  },
+  getDealerReport() {
+    return axios.get(`${this.DATA_URL}/engine/api/v1/dealerreport`);
   }
+
 
 }
