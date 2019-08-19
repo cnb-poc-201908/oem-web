@@ -44,10 +44,49 @@
         <div class="left_bottom">
           <div class="bottom_left">
             <div class="mapping">分配概览</div>
-            <v-chart :options="options" auto-resize />
+            <v-chart :options="pieOptions" auto-resize />
           </div>
           <div class="bottom_right">
-            <Tabs value="name1">
+            <Tabs value="name2">
+              <TabPane label="厂商" name="name2">
+                <div class="scroll">
+                  <div class="tagName" style="margin-bottom: 10px;">
+                    <div class="param">参数</div>
+                    <div class="dealerIcon">
+                      <img style="margin-right: 10px;" src="../assets/16.svg" @click="editOem" />
+                      <img src="../assets/12.svg"/>
+                    </div>
+                  </div>
+                  <div class="weight_item tagList list_title">
+                    <span style="width:80px">属性</span>
+                    <span style="width:50px">权重</span>
+                    <!-- <span>权值</span> -->
+                  </div>
+                  <div class="weight_item" v-for="(val, key, i) in modelsOemList" :key="i">
+                    <img
+                      v-if="val.weight >= 8 && val.weight <= 10"
+                      class="weight_icon"
+                      src="../assets/weight.svg"
+                    />
+                    <Card width="270px" height="60px" style="background: #3D3D3D;">
+                      <div v-if="editOemFlag" class="tagList">
+                        <span class="weightName" style="width: 100px">{{key}}</span>
+                        <i-input v-model="val.weight" style="width: 50px"></i-input>
+                        <!-- <i-input v-model="val.value" style="width: 50px"></i-input> -->
+                      </div>
+                      <div v-if="!editOemFlag" class="tagList">
+                        <span class="weightName" style="width: 100px">{{key}}</span>
+                        <span class="weightName" style="width: 50px">{{val.weight}}</span>
+                        <!-- <span class="weightValue" style="width: 50px">{{val.value}}</span> -->
+                      </div>
+                    </Card>
+                  </div>
+                </div>
+                <div class="button_part">
+                  <button v-if="editOemFlag" class="againMapping" width="100%" @click="update">更新</button>
+                  <button v-if="!editOemFlag && !add" class="againMapping" width="100%" @click="afresh">重新匹配</button>
+                </div>
+              </TabPane>
               <TabPane label="经销商" name="name1">
                 <div class="scroll">
                   <div class="tagName">
@@ -107,56 +146,7 @@
                 </div>
                 <div class="button_part">
                   <button v-if="edit" class="againMapping" width="100%" @click="update">更新</button>
-                  <button v-if="!edit && !add" class="againMapping" width="100%">重新匹配</button>
-                  <button v-if="add" class="againMapping" width="100%" @click="addParam">保存</button>
-                </div>
-              </TabPane>
-              <TabPane label="厂商" name="name2">
-                <div class="scroll">
-                  <div class="tagName" style="margin-bottom: 10px;">
-                    <div class="param">参数</div>
-                    <div class="dealerIcon">
-                      <img style="margin-right: 10px;" src="../assets/16.svg" @click="editParam" />
-                      <img src="../assets/12.svg" @click="increaseDom" />
-                    </div>
-                  </div>
-                  <div class="weight_item tagList list_title">
-                    <span style="width:80px">属性</span>
-                    <span>权重</span>
-                    <span>权值</span>
-                  </div>
-                  <div class="weight_item" v-for="(val, key, i) in weightList" :key="i">
-                    <img
-                      v-if="val.weight >= 8 && val.weight <= 10"
-                      class="weight_icon"
-                      src="../assets/weight.svg"
-                    />
-                    <Card width="270px" height="60px" style="background: #3D3D3D;">
-                      <div v-if="edit" class="tagList">
-                        <span class="weightName" style="width: 100px">{{key}}</span>
-                        <i-input v-model="val.weight" style="width: 50px"></i-input>
-                        <i-input v-model="val.value" style="width: 50px"></i-input>
-                      </div>
-                      <div v-if="!edit" class="tagList">
-                        <span class="weightName" style="width: 100px">{{key}}</span>
-                        <span class="weightName" style="width: 50px">{{val.weight}}</span>
-                        <span class="weightValue" style="width: 50px">{{val.value}}</span>
-                      </div>
-                    </Card>
-                  </div>
-                  <div class="weight_item" v-if="add">
-                    <Card width="270px" height="60px" style="background: #3D3D3D;">
-                      <div class="tagList">
-                        <i-input v-model="name" style="width: 100px"></i-input>
-                        <i-input v-model="weight" style="width: 50px"></i-input>
-                        <i-input v-model="value" style="width: 50px"></i-input>
-                      </div>
-                    </Card>
-                  </div>
-                </div>
-                <div class="button_part">
-                  <button v-if="edit" class="againMapping" width="100%" @click="update">更新</button>
-                  <button v-if="!edit && !add" class="againMapping" width="100%">重新匹配</button>
+                  <button v-if="!edit && !add" class="againMapping" width="100%" @click="afresh">重新匹配</button>
                   <button v-if="add" class="againMapping" width="100%" @click="addParam">保存</button>
                 </div>
               </TabPane>
@@ -199,6 +189,7 @@
           </Card>
         </div>
       </div>
+      <Spin size="large" fix v-if="spinShow"></Spin>
     </div>
     <Modal v-model="dealerModal" title="经销商名称" :footer-hide="true" width="560px">
       <Table :columns="columns1" :data="data1"></Table>
@@ -220,11 +211,13 @@ export default {
   },
   data() {
     return {
+      spinShow: false,
       name: "",
       weight: "",
       value: "",
       add: false,
       edit: false,
+      editOemFlag: false,
       value2: [20, 50],
       // 经销商弹框
       dealerModal: false,
@@ -268,7 +261,6 @@ export default {
           date: "2016-10-04"
         }
       ],
-      // dealerId: "",
       value: "",
       dealerList: [
         { value: "D0001", label: "D09L 武汉江宝南湖" },
@@ -297,7 +289,7 @@ export default {
         title: {
           show: true,
           text: "100" + "%",
-          subtext: "最优分配",
+          subtext: "推荐分配",
           textStyle: {
             color: "#ffffff",
             fontSize: 45,
@@ -311,12 +303,12 @@ export default {
           trigger: "item",
           formatter: "经销商: {c} ({d}%)"
         },
-        // legend: {
-        //   orient: "horizontal",
-        //   bottom: "bottom",
-        //   left: 0,
-        //   data: ["直接访问", "邮件营销", "联盟广告", "视频广告", "搜索引擎"]
-        // },
+        legend: {
+          orient: "horizontal",
+          bottom: "bottom",
+          left: 0,
+          data: ["推荐匹配", "最优匹配", "完全匹配"]
+        },
         series: [
           {
             name: "面积模式",
@@ -325,18 +317,18 @@ export default {
             center: ["50%", "50%"],
             data: [
               {
-                value: 34,
-                name: "吴际帅\n牛亚莉",
+                value: "",
+                name: "推荐匹配",
                 itemStyle: {
                   color: "#20D5D2"
                 },
                 label: {
-                  color: "rgba(255,255,255,.45)",
+                  color: "#20D5D2",
                   fontSize: 14,
-                  formatter: "完全匹配",
+                  formatter: "推荐匹配",
                   rich: {
                     a: {
-                      color: "#fff",
+                      color: "#20D5D2",
                       fontSize: 20,
                       lineHeight: 30
                     }
@@ -344,15 +336,15 @@ export default {
                 }
               },
               {
-                value: 30,
-                name: "rose1",
+                value: "",
+                name: "最优匹配",
                 itemStyle: {
                   color: "transparent"
                 }
               },
               {
-                value: 22,
-                name: "rose2",
+                value: "",
+                name: "完全匹配",
                 itemStyle: {
                   color: "transparent"
                 }
@@ -366,25 +358,25 @@ export default {
             center: ["50%", "50%"],
             data: [
               {
-                value: 34,
-                name: "",
+                value: "",
+                name: "推荐匹配",
                 itemStyle: {
                   color: "transparent"
                 }
               },
               {
-                value: 30,
-                name: "rose1",
+                value: "",
+                name: "最优匹配",
                 itemStyle: {
                   color: "#0062FF"
                 },
                 label: {
-                  color: "rgba(255,255,255,.45)",
+                  color: "#0062FF",
                   fontSize: 14,
                   formatter: "最优匹配",
                   rich: {
                     a: {
-                      color: "#fff",
+                      color: "#0062FF",
                       fontSize: 20,
                       lineHeight: 30
                     }
@@ -392,18 +384,18 @@ export default {
                 }
               },
               {
-                value: 22,
-                name: "rose2",
+                value: "",
+                name: "完全匹配",
                 itemStyle: {
                   color: "#8A3FFC"
                 },
                 label: {
-                  color: "rgba(255,255,255,.78)",
+                  color: "#8A3FFC",
                   fontSize: 14,
-                  formatter: "推荐匹配",
+                  formatter: "完全匹配",
                   rich: {
                     a: {
-                      color: "#fff",
+                      color: "#8A3FFC",
                       fontSize: 20,
                       lineHeight: 30
                     }
@@ -417,19 +409,21 @@ export default {
     };
   },
   created() {
-    // this.dealerId = this.dealerList[0].value;
+    this.spinShow = true;
     this.$store.commit("setDealerId", this.dealerList[0].value);
     this.chooseItem(this.dealerList[0].value);
     api.getReport().then(res => {
-      console.log(res.data);
       this.$store.commit("setMaterial", res.data.data.summary);
       this.$store.commit("setCompleteMapping", res.data.data.best);
       this.$store.commit("setOptimalMapping", res.data.data.prefer);
       this.$store.commit("setRecommendMapping", res.data.data.recommand);
     });
     api.getDealerReport().then(res => {
-      console.log(res.data);
-      this.$store.commit('setDealerReportList', res.data.data.slice(0, 10));
+      this.$store.commit("setDealerReportList", res.data.data.slice(0, 10));
+    });
+    api.getModelsOem().then(res => {
+      this.$store.commit("setModelsOemList", res.data.data);
+      this.spinShow = false;
     });
   },
   computed: {
@@ -458,9 +452,29 @@ export default {
     },
     dealerReportList() {
       return this.$store.state.dealerReportList;
+    },
+    pieOptions() {
+      let options = this.deepClone(this.options);
+      let data = [];
+      let links = [];
+      options.series[0].data[0].value = this.$store.state.recommendMapping;
+      options.series[0].data[1].value = this.$store.state.completeMapping;
+      options.series[0].data[2].value = this.$store.state.optimalMapping;
+      options.series[1].data[0].value = this.$store.state.recommendMapping;
+      options.series[1].data[1].value = this.$store.state.completeMapping;
+      options.series[1].data[2].value = this.$store.state.optimalMapping;
+      return options;
+    },
+    modelsOemList() {
+      return this.$store.state.modelsOemList;
     }
   },
   methods: {
+    deepClone(obj) {
+      let _obj = JSON.stringify(obj),
+        objClone = JSON.parse(_obj);
+      return objClone;
+    },
     goToAbout() {
       this.$store.commit("setMappingType", "all");
       this.$router.push({ name: "about" });
@@ -513,6 +527,20 @@ export default {
       api.postModels(this.dealerId, body).then(res => {
         console.log(res.data);
       });
+    },
+    editOem() {
+      this.editOemFlag = this.editOemFlag === true ? false : true;
+      console.log(this.editOemFlag);
+
+    },
+    afresh() {
+      this.spinShow = true;
+      api.getSmartEngine().then(
+        res => {
+          console.log(res.data.data);
+          this.spinShow = false;
+        }
+      );
     }
   }
 };

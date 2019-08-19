@@ -13,7 +13,8 @@ const initialState = () => ({
   completeMapping: '',
   optimalMapping: '',
   recommendMapping: '',
-  dealerReportList: []
+  dealerReportList: [],
+  modelsOemList: []
 });
 
 export default new Vuex.Store({
@@ -48,6 +49,9 @@ export default new Vuex.Store({
     },
     setDealerReportList(state, value) {
       state.dealerReportList = value;
+    },
+    setModelsOemList(state, value) {
+      state.modelsOemList = value;
     }
   },
   actions: {

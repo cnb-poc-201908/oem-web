@@ -25,6 +25,12 @@ export default {
   },
   getDealerReport() {
     return axios.get(`${this.DATA_URL}/engine/api/v1/dealerreport`);
+  },
+  getModelsOem() {
+    return axios.get(`${this.DATA_URL}/model/models/oem`);
+  },
+  getSmartEngine() {
+    return axios.get(`${this.DATA_URL}/engine/api/v1/smartEngine`);
   }
 
 
