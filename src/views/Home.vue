@@ -486,7 +486,7 @@ export default {
       options.series[1].data[0].value = this.$store.state.recommendMapping;
       options.series[1].data[1].value = this.$store.state.completeMapping;
       options.series[1].data[2].value = this.$store.state.optimalMapping;
-      options.title.text = this.$store.state.recommendMapping;
+      options.title.text = `${this.$store.state.recommendMapping}台`;
       return options;
     },
     modelsOemList() {
