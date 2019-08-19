@@ -497,7 +497,7 @@ export default {
       api.getModels(dealerId).then(res => {
         console.log(res.data.data);
         this.edit = false;
-        res.data.data["销售能力"] = res.data.data.SalesAbility;
+        res.data.data["目标完成率"] = res.data.data.SalesAbility;
         delete res.data.data.SalesAbility;
         res.data.data["经销商征信"] = res.data.data.FundStatus;
         delete res.data.data.FundStatus;
@@ -514,8 +514,8 @@ export default {
     update() {
       // this.spinShow = true;
       console.log(this.weightList);
-      this.weightList["SalesAbility"] = this.weightList["销售能力"];
-        delete this.weightList["销售能力"];
+      this.weightList["SalesAbility"] = this.weightList["目标完成率"];
+        delete this.weightList["目标完成率"];
         this.weightList["FundStatus"] = this.weightList["经销商征信"];
         delete this.weightList["经销商征信"];
         this.weightList["StockDepth"] = this.weightList["库存深度"];
