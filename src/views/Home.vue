@@ -77,11 +77,11 @@
                     <span>权重</span>
                   </div>
                   <div class="weight_item" v-for="(val, key, i) in weightList" :key="i">
-                    <img
+                    <!-- <img
                       v-if="val.weight >= 8 && val.weight <= 10"
                       class="weight_icon"
                       src="../assets/weight.svg"
-                    />
+                    /> -->
                     <div class="weightClass" height="60px">
                       <div v-if="edit" class="tagList">
                         <span class="weightName" style="width: 100px">{{key}}</span>
@@ -127,24 +127,24 @@
                   </div>
                   <div class="weight_item tagList list_title">
                     <span style="width:80px">属性</span>
-                    <span style="width:50px">权重</span>
+                    <span style="width:30px">权重</span>
                     <!-- <span>权值</span> -->
                   </div>
                   <div class="weight_item" v-for="(val, key, i) in modelsOemList" :key="i">
-                    <img
+                    <!-- <img
                       v-if="val.weight >= 8 && val.weight <= 10"
                       class="weight_icon"
                       src="../assets/weight.svg"
-                    />
+                    /> -->
                     <div class="weightClass" height="60px" style="background: #3D3D3D;">
                       <div v-if="editOemFlag" class="tagList">
                         <span class="weightName" style="width: 100px">{{key}}</span>
-                        <i-input v-model="val.weight" style="width: 30px"></i-input>
+                        <i-input v-model="val.weight" style="width: 60px"></i-input>
                         <!-- <i-input v-model="val.value" style="width: 50px"></i-input> -->
                       </div>
                       <div v-if="!editOemFlag" class="tagList">
                         <span class="weightName" style="width: 100px">{{key}}</span>
-                        <span class="weightName" style="width: 30px">{{val.weight}}</span>
+                        <span class="weightName" style="width: 45px">{{val.weight}}</span>
                         <!-- <span class="weightValue" style="width: 50px">{{val.value}}</span> -->
                       </div>
                     </div>
@@ -962,7 +962,9 @@ export default {
   }
 
   .list_title {
-   padding:  0 80px 0 20px;
+   padding:  0 75px 0 20px;
+   color: #ffffff;
+   font-size: 14px;
   }
 
   .tagList {
