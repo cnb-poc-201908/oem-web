@@ -47,51 +47,7 @@
             <v-chart :options="pieOptions" auto-resize />
           </div>
           <div class="bottom_right">
-            <Tabs value="name2">
-              <TabPane label="经销商" name="name2">
-                <div class="scroll">
-                  <div class="tagName" style="margin-bottom: 10px;">
-                    <div class="param">参数</div>
-                    <div class="dealerIcon">
-                      <img style="margin-right: 10px;" src="../assets/16.svg" @click="editOem" />
-                      <img src="../assets/12.svg" />
-                    </div>
-                  </div>
-                  <div class="weight_item tagList list_title">
-                    <span style="width:80px">属性</span>
-                    <span style="width:50px">权重</span>
-                    <!-- <span>权值</span> -->
-                  </div>
-                  <div class="weight_item" v-for="(val, key, i) in modelsOemList" :key="i">
-                    <img
-                      v-if="val.weight >= 8 && val.weight <= 10"
-                      class="weight_icon"
-                      src="../assets/weight.svg"
-                    />
-                    <div class="weightClass" height="60px" style="background: #3D3D3D;">
-                      <div v-if="editOemFlag" class="tagList">
-                        <span class="weightName" style="width: 100px">{{key}}</span>
-                        <i-input v-model="val.weight" style="width: 30px"></i-input>
-                        <!-- <i-input v-model="val.value" style="width: 50px"></i-input> -->
-                      </div>
-                      <div v-if="!editOemFlag" class="tagList">
-                        <span class="weightName" style="width: 100px">{{key}}</span>
-                        <span class="weightName" style="width: 30px">{{val.weight}}</span>
-                        <!-- <span class="weightValue" style="width: 50px">{{val.value}}</span> -->
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="button_part">
-                  <button v-if="editOemFlag" class="againMapping" width="100%" @click="updateOem">更新</button>
-                  <button
-                    v-if="!editOemFlag && !add"
-                    class="againMapping"
-                    width="100%"
-                    @click="afresh"
-                  >重新匹配</button>
-                </div>
-              </TabPane>
+            <Tabs value="name1">
               <TabPane label="厂商" name="name1">
                 <div class="scroll">
                   <div class="tagName">
@@ -158,6 +114,50 @@
                     @click="afresh"
                   >重新匹配</button>
                   <button v-if="add" class="againMapping" width="100%" @click="addParam">保存</button>
+                </div>
+              </TabPane>
+              <TabPane label="经销商" name="name2">
+                <div class="scroll">
+                  <div class="tagName" style="margin-bottom: 10px;">
+                    <div class="param">参数</div>
+                    <div class="dealerIcon">
+                      <img style="margin-right: 10px;" src="../assets/16.svg" @click="editOem" />
+                      <img src="../assets/12.svg" />
+                    </div>
+                  </div>
+                  <div class="weight_item tagList list_title">
+                    <span style="width:80px">属性</span>
+                    <span style="width:50px">权重</span>
+                    <!-- <span>权值</span> -->
+                  </div>
+                  <div class="weight_item" v-for="(val, key, i) in modelsOemList" :key="i">
+                    <img
+                      v-if="val.weight >= 8 && val.weight <= 10"
+                      class="weight_icon"
+                      src="../assets/weight.svg"
+                    />
+                    <div class="weightClass" height="60px" style="background: #3D3D3D;">
+                      <div v-if="editOemFlag" class="tagList">
+                        <span class="weightName" style="width: 100px">{{key}}</span>
+                        <i-input v-model="val.weight" style="width: 30px"></i-input>
+                        <!-- <i-input v-model="val.value" style="width: 50px"></i-input> -->
+                      </div>
+                      <div v-if="!editOemFlag" class="tagList">
+                        <span class="weightName" style="width: 100px">{{key}}</span>
+                        <span class="weightName" style="width: 30px">{{val.weight}}</span>
+                        <!-- <span class="weightValue" style="width: 50px">{{val.value}}</span> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="button_part">
+                  <button v-if="editOemFlag" class="againMapping" width="100%" @click="updateOem">更新</button>
+                  <button
+                    v-if="!editOemFlag && !add"
+                    class="againMapping"
+                    width="100%"
+                    @click="afresh"
+                  >重新匹配</button>
                 </div>
               </TabPane>
             </Tabs>
@@ -342,35 +342,6 @@ export default {
                 value: "",
                 name: "最优匹配",
                 itemStyle: {
-                  color: "transparent"
-                }
-              },
-              {
-                value: "",
-                name: "完全匹配",
-                itemStyle: {
-                  color: "transparent"
-                }
-              }
-            ]
-          },
-          {
-            name: "面积模式",
-            type: "pie",
-            radius: [100, 130],
-            center: ["50%", "50%"],
-            data: [
-              {
-                value: "",
-                name: "推荐匹配",
-                itemStyle: {
-                  color: "transparent"
-                }
-              },
-              {
-                value: "",
-                name: "最优匹配",
-                itemStyle: {
                   color: "#0062FF"
                 },
                 label: {
@@ -406,7 +377,8 @@ export default {
                 }
               }
             ]
-          }
+          },
+          
         ]
       }
     };
@@ -485,9 +457,9 @@ export default {
       options.series[0].data[0].value = this.$store.state.recommendMapping;
       options.series[0].data[1].value = this.$store.state.optimalMapping;
       options.series[0].data[2].value = this.$store.state.completeMapping;
-      options.series[1].data[0].value = this.$store.state.recommendMapping;
-      options.series[1].data[1].value = this.$store.state.optimalMapping;
-      options.series[1].data[2].value = this.$store.state.completeMapping;
+      // options.series[1].data[0].value = this.$store.state.recommendMapping;
+      // options.series[1].data[1].value = this.$store.state.optimalMapping;
+      // options.series[1].data[2].value = this.$store.state.completeMapping;
       options.title.text = `${this.$store.state.recommendMapping}台`;
       return options;
     },
@@ -542,9 +514,14 @@ export default {
     update() {
       // this.spinShow = true;
       console.log(this.weightList);
+      this.weightList["SalesAbility"] = this.weightList["销售能力"];
+        delete this.weightList["销售能力"];
+        this.weightList["FundStatus"] = this.weightList["经销商征信"];
+        delete this.weightList["经销商征信"];
+        this.weightList["StockDepth"] = this.weightList["库存深度"];
+        delete this.weightList["库存深度"];
       api.putModels(this.dealerId, this.weightList).then(res => {
         console.log(res.data);
-
         this.edit = false;
         this.spinShow = false;
       });
@@ -555,10 +532,16 @@ export default {
     },
     updateOem() {
       // this.spinShow = true;
+      this.modelsOemList['color'] = this.modelsOemList['颜色'];
+      delete this.modelsOemList['颜色'];
+      this.modelsOemList['config'] = this.modelsOemList['配置'];
+      delete this.modelsOemList['配置'];
+      this.modelsOemList['upholstery'] = this.modelsOemList['内饰'];
+      delete this.modelsOemList['内饰'];
       api.putModelsOem(this.modelsOemList).then(res => {
         console.log(res.data);
         this.editOemFlag = false;
-        this.spinShow = false;
+        // this.spinShow = false;
       });
     },
     addParam() {
@@ -962,7 +945,7 @@ export default {
     margin: 0 16px 20px;
     position: relative;
     .weightClass {
-      background: #3D3D3D;
+      background: #3d3d3d;
       border-radius: 0.5px;
       width: 100%;
       display: flex;
@@ -979,7 +962,7 @@ export default {
   }
 
   .list_title {
-    padding: 0 20px;
+   padding:  0 80px 0 20px;
   }
 
   .tagList {
