@@ -84,12 +84,12 @@
                     /> -->
                     <div class="weightClass" height="60px">
                       <div v-if="edit" class="tagList">
-                        <span class="weightName" style="width: 100px">{{key}}</span>
+                        <span class="weightName" style="width: 100px">{{oemKey[i]}}</span>
                         <i-input v-model="val.weight" style="width: 50px"></i-input>
                         <i-input v-model="val.value" style="width: 50px"></i-input>
                       </div>
                       <div v-if="!edit" class="tagList">
-                        <span class="weightName" style="width: 100px">{{key}}</span>
+                        <span class="weightName" style="width: 100px">{{oemKey[i]}}</span>
                         <span class="weightName" style="width: 50px">{{val.weight}}</span>
                         <span class="weightValue" style="width: 50px">{{val.value}}</span>
                       </div>
@@ -138,12 +138,12 @@
                     /> -->
                     <div class="weightClass" height="60px" style="background: #3D3D3D;">
                       <div v-if="editOemFlag" class="tagList">
-                        <span class="weightName" style="width: 100px">{{key}}</span>
+                        <span class="weightName" style="width: 100px">{{dealerKey[i]}}</span>
                         <i-input v-model="val.weight" style="width: 60px"></i-input>
                         <!-- <i-input v-model="val.value" style="width: 50px"></i-input> -->
                       </div>
                       <div v-if="!editOemFlag" class="tagList">
-                        <span class="weightName" style="width: 100px">{{key}}</span>
+                        <span class="weightName" style="width: 100px">{{dealerKey[i]}}</span>
                         <span class="weightName" style="width: 45px">{{val.weight}}</span>
                         <!-- <span class="weightValue" style="width: 50px">{{val.value}}</span> -->
                       </div>
@@ -206,11 +206,11 @@
       </div>
       <Spin size="large" fix v-if="spinShow"></Spin>
     </div>
-    <Modal v-model="dealerModal" :title="dealerName" :footer-hide="true" width="800px">
+    <Modal v-model="dealerModal" :title="dealerName" :footer-hide="true" width="900px">
       <Table :columns="columns1" :data="dealerData"></Table>
-      <div style="margin-top:40px;">
+      <!-- <div style="margin-top:40px;">
         <button class="correct">矫正模型</button>
-      </div>
+      </div> -->
     </Modal>
   </div>
 </template>
@@ -236,6 +236,12 @@ export default {
       value2: [20, 50],
       // 经销商弹框
       dealerModal: false,
+      dealerKey: [
+        "颜色", "内饰", "配置", "加装"
+      ],
+      oemKey: [
+        "目标完成率", "经销商征信", "库存深度"
+      ],
       columns1: [
         {
           title: "匹配度",
@@ -406,12 +412,9 @@ export default {
     api.getModelsOem().then(res => {
       // res.data.datacolor = '颜色';
       // Object.defineProperty(res.data.data, 'color', '颜色')
-      res.data.data["颜色"] = res.data.data.color;
-      delete res.data.data.color;
-      res.data.data["配置"] = res.data.data.config;
-      delete res.data.data.config;
-      res.data.data["内饰"] = res.data.data.upholstery;
-      delete res.data.data.upholstery;
+
+      console.log("ssss",res.data.data);
+      
       console.log(res.data.data);
       this.$store.commit("setModelsOemList", res.data.data);
       this.spinShow = false;
@@ -495,14 +498,14 @@ export default {
     chooseItem(dealerId) {
       this.$store.commit("setDealerId", dealerId);
       api.getModels(dealerId).then(res => {
-        console.log(res.data.data);
+        console.log(`111`,res.data.data);
         this.edit = false;
-        res.data.data["目标完成率"] = res.data.data.SalesAbility;
-        delete res.data.data.SalesAbility;
-        res.data.data["经销商征信"] = res.data.data.FundStatus;
-        delete res.data.data.FundStatus;
-        res.data.data["库存深度"] = res.data.data.StockDepth;
-        delete res.data.data.StockDepth;
+        // res.data.data["目标完成率"] = res.data.data.SalesAbility;
+        // delete res.data.data.SalesAbility;
+        // res.data.data["经销商征信"] = res.data.data.FundStatus;
+        // delete res.data.data.FundStatus;
+        // res.data.data["库存深度"] = res.data.data.StockDepth;
+        // delete res.data.data.StockDepth;
         this.$store.commit("setWeightList", res.data.data);
       });
     },
@@ -514,12 +517,12 @@ export default {
     update() {
       // this.spinShow = true;
       console.log(this.weightList);
-      this.weightList["SalesAbility"] = this.weightList["目标完成率"];
-        delete this.weightList["目标完成率"];
-        this.weightList["FundStatus"] = this.weightList["经销商征信"];
-        delete this.weightList["经销商征信"];
-        this.weightList["StockDepth"] = this.weightList["库存深度"];
-        delete this.weightList["库存深度"];
+      // this.weightList["SalesAbility"] = this.weightList["目标完成率"];
+      //   delete this.weightList["目标完成率"];
+      //   this.weightList["FundStatus"] = this.weightList["经销商征信"];
+      //   delete this.weightList["经销商征信"];
+      //   this.weightList["StockDepth"] = this.weightList["库存深度"];
+      //   delete this.weightList["库存深度"];
       api.putModels(this.dealerId, this.weightList).then(res => {
         console.log(res.data);
         this.edit = false;
@@ -531,13 +534,7 @@ export default {
       console.log(this.edit);
     },
     updateOem() {
-      // this.spinShow = true;
-      this.modelsOemList['color'] = this.modelsOemList['颜色'];
-      delete this.modelsOemList['颜色'];
-      this.modelsOemList['config'] = this.modelsOemList['配置'];
-      delete this.modelsOemList['配置'];
-      this.modelsOemList['upholstery'] = this.modelsOemList['内饰'];
-      delete this.modelsOemList['内饰'];
+      
       api.putModelsOem(this.modelsOemList).then(res => {
         console.log(res.data);
         this.editOemFlag = false;

@@ -2,7 +2,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -132,9 +133,11 @@ svg {
   letter-spacing: .18px;
   line-height: 32px !important;
 }
+
 #app {
   height: 100%;
 }
+
 .ivu-tabs-content {
   height: calc(100% - 55px) !important;
 }
@@ -151,16 +154,20 @@ svg {
     }
   }
 }
+
 .ivu-modal-body {
   height: 550px !important;
 }
+
 .ivu-table-wrapper {
-  height: calc(100% - 100px);
+  height: 100%;
 }
+
 .ivu-table-body {
   height: calc(100% - 40px);
   overflow: auto;
 }
+
 .ivu-table-cell {
   span {
     display: block;
@@ -168,9 +175,11 @@ svg {
     word-break: break-word;
   }
 }
+
 .ivu-select {
   color: #fff !important;
 }
+
 .ivu-select-item {
   color: #fff !important;
 }
