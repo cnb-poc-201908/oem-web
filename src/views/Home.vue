@@ -285,10 +285,14 @@ export default {
           subtext: "推荐分配",
           textStyle: {
             color: "#ffffff",
-            fontSize: 45,
+            fontSize: 35,
             fontWeight: "normal",
-            fontFamily: "华文细黑",
+            fontFamily: "PingFangSC-Regular",
             formatter: "{d}%"
+          },
+          subtextStyle: {
+            color: "#666",
+            fontSize: 20
           },
           x: "center",
           y: "center"
