@@ -4,7 +4,7 @@
     <div class="content">
       <div class="content_left">
         <div class="left_top">
-          <div class="board material" @click="potentialMapping('all')">
+          <div class="board material">
             <div class="board_content">
               <div class="title sp_title">物料</div>
               <div class="count sp_count">
@@ -13,7 +13,7 @@
               </div>
             </div>
           </div>
-          <div class="board" @click="potentialMapping('1')">
+          <div class="board">
             <div class="board_content">
               <div class="title">完全匹配</div>
               <div class="count">
@@ -126,7 +126,7 @@
                       class="weight_icon"
                       src="../assets/weight.svg"
                     />
-                    <Card width="270px" height="60px" style="background: #3D3D3D;">
+                    <Card width="270px" height="60px">
                       <div v-if="edit" class="tagList">
                         <span class="weightName" style="width: 100px">{{key}}</span>
                         <i-input v-model="val.weight" style="width: 50px"></i-input>
@@ -536,7 +536,7 @@ export default {
       console.log(this.add);
     },
     update() {
-      this.spinShow = true;
+      // this.spinShow = true;
       console.log(this.weightList);
       api.putModels(this.dealerId, this.weightList).then(res => {
         console.log(res.data);
@@ -550,7 +550,7 @@ export default {
       console.log(this.edit);
     },
     updateOem() {
-      this.spinShow = true;
+      // this.spinShow = true;
       api.putModelsOem(this.modelsOemList).then(res => {
         console.log(res.data);
         this.editOemFlag = false;
