@@ -22,7 +22,7 @@
               </div>
             </div>
           </div>
-          <div class="board" @click="potentialMapping('2')">
+          <div class="board pointer" @click="potentialMapping('2')">
             <div class="board_content">
               <div class="title">最优匹配</div>
               <div class="count">
@@ -31,7 +31,7 @@
               </div>
             </div>
           </div>
-          <div class="board" @click="potentialMapping('3')">
+          <div class="board pointer" @click="potentialMapping('3')">
             <div class="board_content">
               <div class="title">推荐匹配</div>
               <div class="count">
@@ -256,26 +256,26 @@ export default {
       ],
       value: "",
       dealerList: [
-        { value: "D0001", label: "D09L 武汉江宝南湖" },
-        { value: "D0002", label: "D17U 西安中宝" },
-        { value: "D0003", label: "D18G 安阳安德宝" },
-        { value: "D0004", label: "D26D 德州申宝" },
-        { value: "D0005", label: "D29N 沈阳宝晋" },
-        { value: "D0006", label: "D40H 朝阳 汇华宝" },
-        { value: "D0007", label: "D43D 福清德宝" },
-        { value: "D0008", label: "D44 济南大友宝" },
-        { value: "D0009", label: "D45H 昆明宝瀚" },
-        { value: "D0010", label: "D46F 岳阳美宝行" },
-        { value: "D0011", label: "D46M 浏阳美宝行" },
-        { value: "D0012", label: "D47C 眉山长宝" },
-        { value: "D0013", label: "D61B 滨州宝通" },
-        { value: "D0014", label: "D65A 北京卡森" },
-        { value: "D0015", label: "D66G 重庆新宝" },
-        { value: "D0016", label: "D66K 岳阳岳宝" },
-        { value: "D0017", label: "D82A 焦作东宝行" },
-        { value: "D0018", label: "D96A 张家港龙之宝" },
-        { value: "D0019", label: "DA7D 滁州宝晋" },
-        { value: "D0020", label: "DB4A 包头宝霆" }
+        { value: "D0001", label: "北京宝泽行" },
+        { value: "D0002", label: "北京京宝行" },
+        { value: "D0003", label: "北京博得宝" },
+        { value: "D0004", label: "北京汇宝行" },
+        { value: "D0005", label: "上海宝诚尊悦" },
+        { value: "D0006", label: "天津荣宝行" },
+        { value: "D0007", label: "天津天宝" },
+        { value: "D0008", label: "天津运通宝翔" },
+        { value: "D0009", label: "唐山市浩丰宝" },
+        { value: "D0010", label: "保定东澜誉宝" },
+        { value: "D0011", label: "石家庄宝和" },
+        { value: "D0012", label: "上海众国宝泓" },
+        { value: "D0013", label: "上海宝景" },
+        { value: "D0014", label: "上海宝景星诚" },
+        { value: "D0015", label: "南京宁宝" },
+        { value: "D0016", label: "苏州市宝景" },
+        { value: "D0017", label: "常熟宝信" },
+        { value: "D0018", label: "杭州和诚之宝" },
+        { value: "D0019", label: "杭州骏宝行" },
+        { value: "D0020", label: "慈溪宝恒" }
       ],
       single: false,
       options: {
@@ -626,16 +626,10 @@ export default {
         flex: 1;
         justify-content: space-between;
         margin-bottom: 20px;
-
         .board {
           width: 25%;
           height: 100%;
           background: #282828;
-          cursor: pointer;
-
-          &:hover {
-            opacity: 0.6;
-          }
 
           .board_content {
             width: 100%;
@@ -668,7 +662,12 @@ export default {
             }
           }
         }
-
+        .pointer {
+          cursor: pointer;
+          &:hover {
+            opacity: 0.6;
+          }
+        }
         .material {
           background-image: linear-gradient(-32deg, #bb8eff 0%, #0062ff 100%);
         }
@@ -1027,5 +1026,4 @@ export default {
 .ivu-tabs-tabpane {
   height: 100%;
 }
-
 </style>
