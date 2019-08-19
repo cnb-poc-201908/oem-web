@@ -42,5 +42,8 @@ export default {
   },
   getTable(m, r, i) {
     return axios.get(`${this.DATA_URL}/order/orders/distribution?matchStatus=${m}&region=${r}&province=${i}`);
-  }
+  },
+  getOrderGroups(dealerId) {
+    return axios.get(`${this.DATA_URL}/order/orders/groups?dealerId=${dealerId}`);
+  },
 }
