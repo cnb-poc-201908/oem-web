@@ -13,7 +13,7 @@
               </div>
             </div>
           </div>
-          <div class="board">
+          <div class="board pointer" @click="potentialMapping('1')">
             <div class="board_content">
               <div class="title">完全匹配</div>
               <div class="count">
