@@ -48,7 +48,7 @@
           </div>
           <div class="bottom_right">
             <Tabs value="name2">
-              <TabPane label="厂商" name="name2">
+              <TabPane label="经销商" name="name2">
                 <div class="scroll">
                   <div class="tagName" style="margin-bottom: 10px;">
                     <div class="param">参数</div>
@@ -92,7 +92,7 @@
                   >重新匹配</button>
                 </div>
               </TabPane>
-              <TabPane label="经销商" name="name1">
+              <TabPane label="厂商" name="name1">
                 <div class="scroll">
                   <div class="tagName">
                     <div class="param">参数</div>
@@ -117,8 +117,8 @@
                   </div>
                   <div class="weight_item tagList list_title">
                     <span style="width:80px">属性</span>
+                    <span>经销商KPI</span>
                     <span>权重</span>
-                    <span>权值</span>
                   </div>
                   <div class="weight_item" v-for="(val, key, i) in weightList" :key="i">
                     <img
@@ -177,7 +177,12 @@
               <span>比率</span>
             </div>
             <ul>
-              <li class="top_li" @click="openModel" v-for="(item, i) in dealerReportList" :key="i">
+              <li
+                class="top_li"
+                @click="openModel(item)"
+                v-for="(item, i) in dealerReportList"
+                :key="i"
+              >
                 <div class="top_form">
                   <span>{{i+1}}. {{item.name}}</span>
                   <span>{{item.ratio}}%</span>
@@ -201,8 +206,8 @@
       </div>
       <Spin size="large" fix v-if="spinShow"></Spin>
     </div>
-    <Modal v-model="dealerModal" title="经销商名称" :footer-hide="true" width="560px">
-      <Table :columns="columns1" :data="data1"></Table>
+    <Modal v-model="dealerModal" :title="dealerName" :footer-hide="true" width="800px">
+      <Table :columns="columns1" :data="dealerData"></Table>
       <div style="margin-top:40px;">
         <button class="correct">矫正模型</button>
       </div>
@@ -233,42 +238,20 @@ export default {
       dealerModal: false,
       columns1: [
         {
-          title: "Name",
-          key: "name"
+          title: "匹配度",
+          key: "matchRate"
         },
         {
-          title: "Age",
-          key: "age"
+          title: "数量",
+          key: "amount"
         },
         {
-          title: "Address",
-          key: "address"
-        }
-      ],
-      data1: [
-        {
-          name: "John Brown",
-          age: 18,
-          address: "New York No. 1 Lake Park",
-          date: "2016-10-03"
+          title: "匹配数量",
+          key: "matchedAmount"
         },
         {
-          name: "Jim Green",
-          age: 24,
-          address: "London No. 1 Lake Park",
-          date: "2016-10-01"
-        },
-        {
-          name: "Joe Black",
-          age: 30,
-          address: "Sydney No. 1 Lake Park",
-          date: "2016-10-02"
-        },
-        {
-          name: "Jon Snow",
-          age: 26,
-          address: "Ottawa No. 2 Lake Park",
-          date: "2016-10-04"
+          title: "描述",
+          key: "description"
         }
       ],
       value: "",
@@ -445,11 +428,26 @@ export default {
       this.$store.commit("setDealerReportList", res.data.data);
     });
     api.getModelsOem().then(res => {
+      // res.data.datacolor = '颜色';
+      // Object.defineProperty(res.data.data, 'color', '颜色')
+      res.data.data["颜色"] = res.data.data.color;
+      delete res.data.data.color;
+      res.data.data["配置"] = res.data.data.config;
+      delete res.data.data.config;
+      res.data.data["内饰"] = res.data.data.upholstery;
+      delete res.data.data.upholstery;
+      console.log(res.data.data);
       this.$store.commit("setModelsOemList", res.data.data);
       this.spinShow = false;
     });
   },
   computed: {
+    dealerData() {
+      return this.$store.state.dealerData;
+    },
+    dealerName() {
+      return this.$store.state.dealerName;
+    },
     weightList() {
       return this.$store.state.weightList;
     },
@@ -481,11 +479,11 @@ export default {
       let data = [];
       let links = [];
       options.series[0].data[0].value = this.$store.state.recommendMapping;
-      options.series[0].data[1].value = this.$store.state.completeMapping;
-      options.series[0].data[2].value = this.$store.state.optimalMapping;
+      options.series[0].data[1].value = this.$store.state.optimalMapping;
+      options.series[0].data[2].value = this.$store.state.completeMapping;
       options.series[1].data[0].value = this.$store.state.recommendMapping;
-      options.series[1].data[1].value = this.$store.state.completeMapping;
-      options.series[1].data[2].value = this.$store.state.optimalMapping;
+      options.series[1].data[1].value = this.$store.state.optimalMapping;
+      options.series[1].data[2].value = this.$store.state.completeMapping;
       options.title.text = `${this.$store.state.recommendMapping}台`;
       return options;
     },
@@ -503,7 +501,11 @@ export default {
       this.$store.commit("setMappingType", "all");
       this.$router.push({ name: "about" });
     },
-    openModel() {
+    openModel(item) {
+      this.$store.commit("setDealerName", item.name);
+      api.getOrderGroups(item.dealerId).then(res => {
+        this.$store.commit("setDealerData", res.data.data);
+      });
       this.dealerModal = true;
     },
     potentialMapping(type) {
@@ -511,7 +513,6 @@ export default {
       api.getSankey(type).then(res => {
         this.$store.commit("setSankeyData", res.data.data.data);
         this.$store.commit("setSankeyLinks", res.data.data.links);
-        console.log(res.data.data);
       });
       this.$router.push({ name: "about" });
     },
@@ -520,6 +521,12 @@ export default {
       api.getModels(dealerId).then(res => {
         console.log(res.data.data);
         this.edit = false;
+        res.data.data["销售能力"] = res.data.data.SalesAbility;
+        delete res.data.data.SalesAbility;
+        res.data.data["经销商征信"] = res.data.data.FundStatus;
+        delete res.data.data.FundStatus;
+        res.data.data["库存深度"] = res.data.data.StockDepth;
+        delete res.data.data.StockDepth;
         this.$store.commit("setWeightList", res.data.data);
       });
     },
@@ -533,6 +540,7 @@ export default {
       console.log(this.weightList);
       api.putModels(this.dealerId, this.weightList).then(res => {
         console.log(res.data);
+
         this.edit = false;
         this.spinShow = false;
       });
@@ -1008,6 +1016,9 @@ export default {
   letter-spacing: 0.18px;
   border: none;
 }
+.dealer_table {
+  overflow: auto;
+}
 
 .ivu-tabs {
   height: 100%;
@@ -1016,4 +1027,5 @@ export default {
 .ivu-tabs-tabpane {
   height: 100%;
 }
+
 </style>

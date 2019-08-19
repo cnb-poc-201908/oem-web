@@ -151,3 +151,13 @@ svg {
     }
   }
 }
+.ivu-modal-body {
+  height: 550px !important;
+}
+.ivu-table-wrapper {
+  height: calc(100% - 100px);
+}
+.ivu-table-body {
+  height: calc(100% - 40px);
+  overflow: auto;
+}
