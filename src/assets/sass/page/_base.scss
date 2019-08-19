@@ -2,8 +2,7 @@
   box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
   height: 100%;
 }
 
@@ -18,23 +17,23 @@ svg {
 }
 
 .ivu-tabs-nav .ivu-tabs-tab-active {
-  color: #ffffff !important;
+  color: #fff !important;
   font-family: PingFangSC-Regular;
   font-size: 16px;
-  color: #FFFFFF;
-  letter-spacing: 0.18px;
+  color: #fff;
+  letter-spacing: .18px;
 }
 
 .ivu-tabs-nav .ivu-tabs-tab:hover {
-  color: #ffffff !important;
+  color: #fff !important;
   font-family: PingFangSC-Regular;
   font-size: 16px;
-  color: #FFFFFF;
-  letter-spacing: 0.18px;
+  color: #fff;
+  letter-spacing: .18px;
 }
 
 .ivu-tabs-ink-bar {
-  background-color: #20D5D2 !important;
+  background-color: #20d5d2 !important;
 }
 
 .ivu-select-selection {
@@ -47,7 +46,7 @@ svg {
 }
 
 .ivu-input {
-  background-color: #3D3D3D !important;
+  background-color: #3d3d3d !important;
 }
 
 .ivu-select-single .ivu-select-selection .ivu-select-placeholder {
@@ -60,9 +59,9 @@ svg {
 }
 
 .ivu-checkbox-checked .ivu-checkbox-inner {
-  background: #3D3D3D !important;
+  background: #3d3d3d !important;
   border-radius: 2px !important;
-  border-color: #3D3D3D !important;
+  border-color: #3d3d3d !important;
 }
 
 .ivu-modal-content {
@@ -76,8 +75,8 @@ svg {
 .ivu-modal-header-inner {
   font-family: PingFangSC-Regular;
   font-size: 16px !important;
-  color: #FFFFFF !important;
-  letter-spacing: 0.18px;
+  color: #fff !important;
+  letter-spacing: .18px;
 }
 
 .ivu-table th {
@@ -87,7 +86,7 @@ svg {
 
 .ivu-table td {
   border-bottom: 2px solid #171717 !important;
-  background: #3D3D3D !important;
+  background: #3d3d3d !important;
 }
 
 .ivu-table-wrapper {
@@ -101,8 +100,8 @@ svg {
 .ivu-table {
   font-family: PingFangSC-Regular;
   font-size: 14px !important;
-  color: #BEBEBE !important;
-  letter-spacing: 0.16px;
+  color: #bebebe !important;
+  letter-spacing: .16px;
 }
 
 .ivu-tabs {
@@ -110,15 +109,15 @@ svg {
 }
 
 .ivu-slider-bar {
-  background: #EE538B !important;
+  background: #ee538b !important;
 }
 
 .ivu-slider-button {
-  border: 2px solid #EE538B !important;
+  border: 2px solid #ee538b !important;
 }
 
 .ivu-slider-button:hover {
-  border-color: #EE538B !important;
+  border-color: #ee538b !important;
 }
 
 .ivu-select-single .ivu-select-selection .ivu-select-selected-value {
@@ -127,9 +126,12 @@ svg {
 }
 
 .ivu-input {
-  border: 1px solid #009C98 !important;
+  border: 1px solid #009c98 !important;
   font-size: 16px !important;
-  color: #009C98 !important;
-  letter-spacing: 0.18px;
+  color: #009c98 !important;
+  letter-spacing: .18px;
   line-height: 32px !important;
+}
+#app {
+  height: 100%;
 }
